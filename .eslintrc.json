@@ -29,6 +29,6 @@
       }
     ],
     "unicorn/no-null": "off",
-    "react/jsx-filename-extension": [2, { "allow": "as-needed" }]
+    "react/jsx-filename-extension": [2, {"allow": "as-needed"}]
   }
 }
