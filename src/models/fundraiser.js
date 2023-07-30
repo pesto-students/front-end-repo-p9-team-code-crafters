@@ -45,6 +45,10 @@ export const fundraiserSchema = new Schema(
         ref: "Donation",
       },
     ],
+    created_by: {
+      type: String,
+      ref: "User",
+    },
   },
   {timestamps: true}
 );
