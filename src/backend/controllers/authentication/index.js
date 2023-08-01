@@ -1,4 +1,4 @@
-import {loginSchema} from "@/be/validators";
+import {loginSchema} from "@/backend/validators";
 import {User} from "@/models";
 import {sign, verify} from "jsonwebtoken";
 

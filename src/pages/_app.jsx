@@ -1,23 +1,10 @@
 import "@/styles/globals.css";
 import {ConfigProvider} from "antd";
-import {Poppins} from "next/font/google";
+import {Hydrate, QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {poppins, token, componentsToken} from "@/frontend/utlis";
+import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 
-const token = {
-  colorPrimary: "#fd346e",
-  colorInfo: "#fd346e",
-  colorTextBase: "#5a5a5a",
-  fontSize: 14,
-  wireframe: true,
-  colorPrimaryBg: "#FFF5F8",
-  colorInfoBg: "#FFF5F8",
-  borderRadius: 0,
-};
-
-const poppins = Poppins({
-  weight: ["100", "200", "300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-});
+const queryClient = new QueryClient();
 
 export default function App({Component, pageProps}) {
   return (
@@ -27,8 +14,14 @@ export default function App({Component, pageProps}) {
           --poppins-font: ${poppins.style.fontFamily};
         }
       `}</style>
-      <ConfigProvider theme={{token}}>
-        <Component {...pageProps} />
+
+      <ConfigProvider theme={{token, components: componentsToken}}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <Component {...pageProps} />
+          </Hydrate>
+          <ReactQueryDevtools />
+        </QueryClientProvider>
       </ConfigProvider>
     </>
   );
