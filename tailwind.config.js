@@ -13,6 +13,7 @@ module.exports = {
       colors: {
         lightpink: "#FFF5F8",
         pink: "#FD346E",
+        lightgray: "#767676",
       },
       fontFamily: {
         sans: ["var(--poppins-font)"],

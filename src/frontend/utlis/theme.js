@@ -15,6 +15,8 @@ export const token = {
   colorPrimaryBg: "#FFF5F8",
   colorInfoBg: "#FFF5F8",
   borderRadius: 0,
+  colorBorder: "#c8c8c8",
+  colorTextQuaternary: "#767676",
 };
 
 export const componentsToken = {
@@ -22,5 +24,6 @@ export const componentsToken = {
     colorText: "#5a5a5a",
     colorTextDescription: "#5a5a5a",
     colorTextHeading: "#121212",
+    fontFamilyCode: poppins.style.fontFamily,
   },
 };

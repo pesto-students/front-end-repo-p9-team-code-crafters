@@ -16,3 +16,8 @@ html{
 h1,h2,h3,h4,h5{
   color: #121212;
 }
+
+a,a:link,a:visited,a:hover,a:active {
+  text-decoration: none;
+  @apply text-pink
+}
