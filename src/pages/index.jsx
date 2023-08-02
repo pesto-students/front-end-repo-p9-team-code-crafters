@@ -1,11 +1,14 @@
-import {Inter} from "next/font/google";
+import {Button, Typography} from "antd";
 
-const inter = Inter({subsets: ["latin"]});
+const {Title, Text} = Typography;
 
 export default function Home() {
   return (
-    <main className={`${inter.className}`}>
+    <main>
       <h1>Initial Page</h1>
+      <Button type="primary"> Pink Button</Button>
+      <Title level={2}>h2. Ant Design</Title>
+      <Text>Ant Design (default)</Text>
     </main>
   );
 }
