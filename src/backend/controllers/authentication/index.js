@@ -1,6 +1,43 @@
-import {loginSchema} from "@/backend/validators";
+import {loginSchema, signupSchema} from "@/backend/validators";
 import {User} from "@/models";
 import {sign, verify} from "jsonwebtoken";
+import bcrypt from "bcrypt";
+
+export const signupController = async (request, response) => {
+  const {data} = request.body;
+  if (!data) return response.status(400).end("signup data is missing!");
+  signupSchema
+    .validate(data)
+    .then(async (signupData) => {
+      const {email, password, name, dob, contact} = signupData;
+      try {
+        let userData = await User.findOne({email: email.toLowerCase()});
+        if (userData) return response.status(401).send("user already exists!");
+        const encryptedPassword = await bcrypt
+          .genSalt(Number(process.env.SALT_ROUNDS))
+          .then((salt) => {
+            return bcrypt.hash(password, salt);
+          })
+          .then((hash) => {
+            return hash;
+          });
+        const user = new User({
+          name,
+          email: email.toLowerCase(),
+          dob,
+          password: encryptedPassword,
+          contact,
+        });
+        await user.save();
+        return response.status(200).send("User Signup successfull!!");
+      } catch (error) {
+        return response.status(500).send(error.message);
+      }
+    })
+    .catch((error) => {
+      return response.status(400).send(error.message);
+    });
+};
 
 export const loginController = async (request, response) => {
   const {data} = request.body;
@@ -9,10 +46,13 @@ export const loginController = async (request, response) => {
     .validate(data)
     .then(async (loginData) => {
       const {email, password} = loginData;
-      let userData = await User.findOne({email});
+      let userData = await User.findOne({email, is_active: true});
       if (!userData) return response.status(400).send("user not found");
 
-      const isPasswordCorrect = password === userData.password;
+      const isPasswordCorrect = await bcrypt.compare(
+        password,
+        userData.password
+      );
       if (isPasswordCorrect) {
         const tokenData = {
           name: userData.name,
