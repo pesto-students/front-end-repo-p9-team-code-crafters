@@ -60,7 +60,7 @@ export const SignupForm = ({handleSubmit, isLoading}) => {
       </Form.Item>
 
       <Form.Item
-        name="date-picker"
+        name="dob"
         rules={[
           {
             type: "object",
