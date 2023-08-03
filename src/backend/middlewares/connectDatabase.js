@@ -12,6 +12,7 @@ const connectionUrl =
 
 export const connectDB = async (_request, _response, next) => {
   try {
+    console.log(connectionUrl);
     if (!mongoose.connections[0].readyState) {
       await mongoose.connect(connectionUrl, {
         useUnifiedTopology: true,
