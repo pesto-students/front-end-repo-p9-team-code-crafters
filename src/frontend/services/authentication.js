@@ -16,6 +16,16 @@ export const login = (loginInfo) => {
   }).then(handleResponse);
 };
 
+export const signup = (signupInfo) => {
+  return fetch(getApiUrl("signup"), {
+    method: "POST",
+    headers: {
+      ...getApplicationJsonHeader(),
+    },
+    body: JSON.stringify({data: signupInfo}),
+  }).then(handleResponse);
+};
+
 export const logout = () => {
   clearAuthToken();
 };
