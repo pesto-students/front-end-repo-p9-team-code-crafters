@@ -1,7 +1,10 @@
 import {loginSchema, signupSchema} from "@/backend/validators";
-import {User} from "@/models";
+import {ResetToken, User} from "@/models";
 import {sign, verify} from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import {generate32BitCode, getEmailBody} from "@/backend/utils";
+import {forgotPasswordEmail} from "@/appData";
+import {sendEmail} from "@/backend/services";
 
 export const signupController = async (request, response) => {
   const {data} = request.body;
@@ -90,5 +93,54 @@ export const verifyUserController = async (request, response) => {
     return error.name === "TokenExpiredError"
       ? response.status(403).send("user session has expired")
       : response.status(401).send("invalid access token");
+  }
+};
+
+export const forgotPasswordController = async (request, response) => {
+  const {data} = request.body;
+  if (!data || !data.email) return response.status(401).end("data is missing!");
+  try {
+    let userData = await User.findOne({email: data.email, is_active: true});
+    if (!userData) return response.status(400).send("user not found");
+    let tokenData = {
+      user: userData._id,
+      code: generate32BitCode(),
+    };
+    const resetToken = sign(tokenData, process.env.ACCESS_TOKEN_SALT, {
+      expiresIn: "24h",
+    });
+
+    const token = new ResetToken(tokenData);
+    const databaseData = await token.save();
+    const emailBody = getEmailBody({
+      subject: "Link to Reset Password",
+      htmlContent: forgotPasswordEmail,
+      messageVersions: [
+        {
+          to: [
+            {
+              email: userData.email,
+              name: userData.name,
+            },
+          ],
+          params: {
+            link:
+              process.env.NEXT_PUBLIC_ROOT_API_URL +
+              "/reset-password?token=" +
+              resetToken,
+          },
+        },
+      ],
+    });
+    if (databaseData) {
+      await sendEmail(emailBody);
+    } else {
+      return response
+        .status(500)
+        .send("Something went wrong!! please try again in sometime!");
+    }
+    return response.status(200).send("Email for resetting password sent!");
+  } catch (error) {
+    return response.status(500).send(error.message);
   }
 };

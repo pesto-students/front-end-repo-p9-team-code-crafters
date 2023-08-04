@@ -1,4 +1,4 @@
-import {USER_ROLES} from "@/appConstants";
+import {USER_ROLES} from "@/appData";
 import {Schema} from "mongoose";
 
 export const userSchema = new Schema(

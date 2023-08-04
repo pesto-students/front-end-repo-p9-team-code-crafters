@@ -1,4 +1,4 @@
-import {FUNDRAISER_CATEGORY, FUNDRAISER_STATUS} from "@/appConstants";
+import {FUNDRAISER_CATEGORY, FUNDRAISER_STATUS} from "@/appData";
 import {Schema} from "mongoose";
 
 export const fundraiserSchema = new Schema(
