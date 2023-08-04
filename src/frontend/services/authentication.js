@@ -41,3 +41,13 @@ export const verifyUser = async () => {
     body: JSON.stringify({data: accessToken}),
   }).then(handleResponse);
 };
+
+export const forgotPassword = (data) => {
+  return fetch(getApiUrl("forgotPassword"), {
+    method: "POST",
+    headers: {
+      ...getApplicationJsonHeader(),
+    },
+    body: JSON.stringify({data}),
+  }).then(handleResponse);
+};

@@ -1,4 +1,4 @@
-import {USER_ROLES} from "@/appConstants";
+import {USER_ROLES} from "@/appData";
 
 export const checkAdmin = (request, response, next) => {
   const {userData} = request;
