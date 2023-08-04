@@ -1,14 +1,13 @@
 import {Button, Form, Input} from "antd";
-import Link from "next/link";
 
-export const SigninForm = ({handleSubmit, isLoading}) => {
-  const [loginForm] = Form.useForm();
+export const ForgotPasswordForm = ({handleSubmit, isLoading}) => {
+  const [forgotPasswordForm] = Form.useForm();
   const onFinish = (values) => {
-    handleSubmit(values, loginForm);
+    handleSubmit(values, forgotPasswordForm);
   };
   return (
     <Form
-      form={loginForm}
+      form={forgotPasswordForm}
       layout="vertical"
       requiredMark={false}
       name="basic"
@@ -32,25 +31,6 @@ export const SigninForm = ({handleSubmit, isLoading}) => {
         <Input placeholder="Email Address" />
       </Form.Item>
 
-      <Form.Item
-        name="password"
-        className="mb-2"
-        rules={[
-          {
-            required: true,
-            message: "enter password!",
-          },
-        ]}
-      >
-        <Input.Password placeholder="Password" />
-      </Form.Item>
-      <Link href="/forgotPassword">Forgot your password?</Link>
-
-      <p className="text-center text-lightgray text-xs mt-4 mb-6">
-        By continuing, you agree to the ImpactHub terms of service and privacy
-        notice.
-      </p>
-
       <Form.Item>
         <Button
           disabled={isLoading}
@@ -58,7 +38,7 @@ export const SigninForm = ({handleSubmit, isLoading}) => {
           htmlType="submit"
           className="w-full"
         >
-          Sign in
+          Send Email
         </Button>
       </Form.Item>
     </Form>

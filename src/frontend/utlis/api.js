@@ -6,6 +6,7 @@ const prefix =
 
 const API = {
   login: "authentication/login",
+  forgotPassword: "authentication/forgotPassword",
   verify: "authentication/verify",
   signup: "authentication/signup",
 };
