@@ -6,7 +6,7 @@ export default function MainLayout({children, showLoader}) {
       {showLoader ? <FullPageLoader /> : null}
       <>
         <MainHeader />
-        <main className="flex items-center justify-center py-12 px-8 mt-16 bg-lightpink">
+        <main className="flex items-center justify-center mt-16 flex-col">
           {children}
         </main>
         <MainFooter />
