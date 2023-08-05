@@ -1,19 +1,14 @@
-import {Button, Form, Input} from "antd";
+import {Form, Input} from "antd";
+import {func, bool} from "prop-types";
+import {FormWrapper} from "../wrappers";
 
 export const ForgotPasswordForm = ({handleSubmit, isLoading}) => {
-  const [forgotPasswordForm] = Form.useForm();
-  const onFinish = (values) => {
-    handleSubmit(values, forgotPasswordForm);
-  };
   return (
-    <Form
-      form={forgotPasswordForm}
-      layout="vertical"
-      requiredMark={false}
-      name="basic"
-      onFinish={onFinish}
-      autoComplete="off"
-      size="large"
+    <FormWrapper
+      handleSubmit={handleSubmit}
+      isLoading={isLoading}
+      formName="forgotPassword"
+      submitBtnText="Send Email"
     >
       <Form.Item
         name="email"
@@ -30,17 +25,11 @@ export const ForgotPasswordForm = ({handleSubmit, isLoading}) => {
       >
         <Input placeholder="Email Address" />
       </Form.Item>
-
-      <Form.Item>
-        <Button
-          disabled={isLoading}
-          type="primary"
-          htmlType="submit"
-          className="w-full"
-        >
-          Send Email
-        </Button>
-      </Form.Item>
-    </Form>
+    </FormWrapper>
   );
+};
+
+ForgotPasswordForm.propTypes = {
+  handleSubmit: func.isRequired,
+  isLoading: bool.isRequired,
 };
