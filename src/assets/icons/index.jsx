@@ -65,3 +65,12 @@ export const LinkedinIcon = (properties) => (
     {...properties}
   />
 );
+export const HamburgerIcon = (properties) => (
+  <Image
+    width={24}
+    height={24}
+    src="/icons/hamburger.svg"
+    alt="Menu"
+    {...properties}
+  />
+);
