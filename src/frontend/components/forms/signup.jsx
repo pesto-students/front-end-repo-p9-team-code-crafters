@@ -1,19 +1,14 @@
-import {Button, DatePicker, Form, Input} from "antd";
+import {DatePicker, Form, Input} from "antd";
+import {func, bool} from "prop-types";
+import {FormWrapper} from "../wrappers";
 
 export const SignupForm = ({handleSubmit, isLoading}) => {
-  const [signupForm] = Form.useForm();
-  const onFinish = (values) => {
-    handleSubmit(values, signupForm);
-  };
   return (
-    <Form
-      form={signupForm}
-      layout="vertical"
-      requiredMark={false}
-      name="basic"
-      onFinish={onFinish}
-      autoComplete="off"
-      size="large"
+    <FormWrapper
+      handleSubmit={handleSubmit}
+      isLoading={isLoading}
+      formName="signup"
+      submitBtnText="Sign up"
     >
       <Form.Item
         name="name"
@@ -42,7 +37,6 @@ export const SignupForm = ({handleSubmit, isLoading}) => {
       >
         <Input placeholder="Email Address" />
       </Form.Item>
-
       <Form.Item
         name="contact"
         rules={[
@@ -58,7 +52,6 @@ export const SignupForm = ({handleSubmit, isLoading}) => {
       >
         <Input placeholder="Contact Number" />
       </Form.Item>
-
       <Form.Item
         name="dob"
         rules={[
@@ -71,7 +64,6 @@ export const SignupForm = ({handleSubmit, isLoading}) => {
       >
         <DatePicker className="w-full" placeholder="Date of Birth" />
       </Form.Item>
-
       <Form.Item
         name="password"
         rules={[
@@ -84,7 +76,6 @@ export const SignupForm = ({handleSubmit, isLoading}) => {
       >
         <Input.Password placeholder="Password" />
       </Form.Item>
-
       <Form.Item
         name="confirm"
         dependencies={["password"]}
@@ -106,22 +97,15 @@ export const SignupForm = ({handleSubmit, isLoading}) => {
       >
         <Input.Password placeholder="Confirm Password" />
       </Form.Item>
-
       <p className="text-center text-lightgray text-xs mb-6">
         By continuing, you agree to the ImpactHub terms of service and privacy
         notice.
       </p>
-
-      <Form.Item>
-        <Button
-          disabled={isLoading}
-          type="primary"
-          htmlType="submit"
-          className="w-full"
-        >
-          Sign up
-        </Button>
-      </Form.Item>
-    </Form>
+    </FormWrapper>
   );
+};
+
+SignupForm.propTypes = {
+  handleSubmit: func.isRequired,
+  isLoading: bool.isRequired,
 };

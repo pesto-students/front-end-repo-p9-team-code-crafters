@@ -20,18 +20,16 @@ export default function Signup() {
         onSuccess: (data) => {
           message.success(data);
           router.push("/login");
+          form.resetFields();
         },
         onError: (error) => {
           message.error(error);
-        },
-        onSettled: () => {
-          form.resetFields();
         },
       }
     );
   };
   return (
-    <AuthenticationLayout>
+    <AuthenticationLayout showLoader={isLoading}>
       <div className="w-full md:max-w-md lg:max-w-lg md:p-6 md:bg-white flex flex-col items-center">
         <Image
           className="mb-6 hidden md:block"
