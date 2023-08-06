@@ -18,19 +18,17 @@ export default function Login() {
     mutateSignin(values, {
       onSuccess: (data) => {
         saveAuthToken(data.data);
+        form.resetFields();
         message.success("Login Successfull!");
         router.push("/");
       },
       onError: (error) => {
         message.error(error);
       },
-      onSettled: () => {
-        form.resetFields();
-      },
     });
   };
   return (
-    <AuthenticationLayout>
+    <AuthenticationLayout showLoader={isLoading}>
       <div className="w-full md:max-w-md lg:max-w-lg md:p-6 md:bg-white flex flex-col items-center">
         <Image
           className="mb-6 hidden md:block"
