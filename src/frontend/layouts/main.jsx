@@ -1,4 +1,5 @@
 import {FullPageLoader, MainFooter, MainHeader} from "../components";
+import {bool} from "prop-types";
 
 export default function MainLayout({children, showLoader}) {
   return (
@@ -14,3 +15,7 @@ export default function MainLayout({children, showLoader}) {
     </>
   );
 }
+
+MainLayout.propTypes = {
+  showLoader: bool,
+};

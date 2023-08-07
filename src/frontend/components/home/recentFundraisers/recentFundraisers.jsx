@@ -31,9 +31,7 @@ const RecentFundraisersTitle = () => (
 const FundraiserCards = () => (
   <Row gutter={[32, 32]} justify={"space-between"} className="px-4">
     {fundraiserData.map((fundraiser) => {
-      return (
-        <FundraiserCard key={fundraiser.title} fundraiserDetails={fundraiser} />
-      );
+      return <FundraiserCard key={fundraiser.title} {...fundraiser} />;
     })}
   </Row>
 );
