@@ -1,19 +1,18 @@
 import {HeroImage} from "@/assets/images";
 import {getDaysToGo} from "@/frontend/utlis";
 import {Button, Card, Col, Progress, Row, Tag, Typography} from "antd";
+import {number, string} from "prop-types";
 
 const {Title, Text, Paragraph} = Typography;
 
-export const FundraiserCard = ({fundraiserDetails}) => {
-  const {
-    category,
-    title,
-    short_description,
-    target_amount,
-    target_date,
-    donation,
-  } = fundraiserDetails;
-
+export const FundraiserCard = ({
+  category,
+  title,
+  short_description,
+  target_amount,
+  target_date,
+  donation,
+}) => {
   const percent = Math.round((donation / target_amount) * 100);
   const daysToGo = getDaysToGo(target_date);
 
@@ -60,4 +59,13 @@ export const FundraiserCard = ({fundraiserDetails}) => {
       </Card>
     </>
   );
+};
+
+FundraiserCard.propTypes = {
+  category: string,
+  title: string,
+  short_description: string,
+  target_amount: number,
+  target_date: string,
+  donation: number,
 };

@@ -1,4 +1,5 @@
 import {Col, Typography} from "antd";
+import {string} from "prop-types";
 
 export const StatsCard = ({category, value}) => {
   const {Text} = Typography;
@@ -15,4 +16,9 @@ export const StatsCard = ({category, value}) => {
       <Text className=" text-xs font-semibold">{category} </Text>
     </Col>
   );
+};
+
+StatsCard.propTypes = {
+  category: string,
+  value: string,
 };
