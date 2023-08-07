@@ -1,4 +1,8 @@
-import {loginSchema, signupSchema} from "@/backend/validators";
+import {
+  loginSchema,
+  resetPasswordSchema,
+  signupSchema,
+} from "@/backend/validators";
 import {ResetToken, User} from "@/models";
 import {sign, verify} from "jsonwebtoken";
 import bcrypt from "bcrypt";
@@ -44,7 +48,7 @@ export const signupController = async (request, response) => {
 
 export const loginController = async (request, response) => {
   const {data} = request.body;
-  if (!data) response.status(400).end("login data is missing!");
+  if (!data) return response.status(400).end("login data is missing!");
   loginSchema
     .validate(data)
     .then(async (loginData) => {
@@ -126,7 +130,7 @@ export const forgotPasswordController = async (request, response) => {
           params: {
             link:
               process.env.NEXT_PUBLIC_ROOT_API_URL +
-              "/reset-password?token=" +
+              "/resetPassword?token=" +
               resetToken,
           },
         },
@@ -143,4 +147,57 @@ export const forgotPasswordController = async (request, response) => {
   } catch (error) {
     return response.status(500).send(error.message);
   }
+};
+
+export const verifyResetTokenController = async (request, response) => {
+  const {data} = request.body;
+  if (!data || data === "")
+    return response.status(401).end("token is missing!");
+  try {
+    const tokenData = verify(data, process.env.ACCESS_TOKEN_SALT);
+    try {
+      const token = await ResetToken.findOne({code: tokenData.code});
+      return token
+        ? response.status(200).send(tokenData)
+        : response.status(400).send("invalid token");
+    } catch (error) {
+      return response.status(500).send(error.message);
+    }
+  } catch {
+    return response.status(400).send("invalid token data");
+  }
+};
+
+export const resetPasswordController = async (request, response) => {
+  const {data} = request.body;
+  if (!data) return response.status(400).end("data is missing!");
+  resetPasswordSchema
+    .validate(data)
+    .then(async (resetPasswordData) => {
+      const {user, password, code} = resetPasswordData;
+      const encryptedPassword = await bcrypt
+        .genSalt(Number(process.env.SALT_ROUNDS))
+        .then((salt) => {
+          return bcrypt.hash(password, salt);
+        })
+        .then((hash) => {
+          return hash;
+        });
+      try {
+        await User.findByIdAndUpdate(
+          user,
+          {
+            password: encryptedPassword,
+          },
+          {returnDocument: "after"}
+        );
+        await ResetToken.findOneAndDelete({code});
+        return response.status(200).send("Password has been updated!");
+      } catch (error) {
+        return response.status(500).send(error.message);
+      }
+    })
+    .catch((error) => {
+      return response.status(400).send(error.message);
+    });
 };

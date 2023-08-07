@@ -9,6 +9,8 @@ const API = {
   forgotPassword: "authentication/forgotPassword",
   verify: "authentication/verify",
   signup: "authentication/signup",
+  resetPassword: "authentication/resetPassword",
+  verifyResetPasswordToken: "authentication/resetPassword/verifyToken",
 };
 
 export const getApiUrl = (urlName) => prefix + get(API, urlName);
