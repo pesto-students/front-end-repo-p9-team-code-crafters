@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "@/styles/globals.css";
 import {ConfigProvider} from "antd";
 import {Hydrate, QueryClient, QueryClientProvider} from "@tanstack/react-query";

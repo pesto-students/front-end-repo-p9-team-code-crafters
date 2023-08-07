@@ -29,6 +29,15 @@
       }
     ],
     "unicorn/no-null": "off",
-    "react/jsx-filename-extension": [2, {"allow": "as-needed"}]
+    "react/jsx-filename-extension": ["error", {"allow": "as-needed"}],
+    "react/prop-types": ["error", {"ignore": ["children"]}],
+    "react/hook-use-state": ["error", {"allowDestructuredState": true}],
+    "react/jsx-fragments": "error",
+    "react/jsx-handler-names": "error",
+    "react/jsx-key": [
+      "error",
+      {"checkFragmentShorthand": true, "warnOnDuplicates": true}
+    ],
+    "react/no-unused-state": "error"
   }
 }

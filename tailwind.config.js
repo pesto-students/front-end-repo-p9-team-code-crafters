@@ -20,6 +20,9 @@ module.exports = {
         sans: ["var(--poppins-font)"],
         poppins: ["var(--poppins-font)", "ui-serif", "Georgia"],
       },
+      minHeight: {
+        mainLayout: "calc(100vh - 128px)",
+      },
     },
     screens: {
       xs: "480px",
