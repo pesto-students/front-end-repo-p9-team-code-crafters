@@ -168,6 +168,15 @@ export const verifyResetTokenController = async (request, response) => {
   }
 };
 
+export const deleteResetTokenController = async (_request, response) => {
+  const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  try {
+    await ResetToken.deleteMany({createdAt: {$lt: twentyFourHoursAgo}});
+  } catch {
+    return response.status(400).send("invalid token data");
+  }
+};
+
 export const resetPasswordController = async (request, response) => {
   const {data} = request.body;
   if (!data) return response.status(400).end("data is missing!");
