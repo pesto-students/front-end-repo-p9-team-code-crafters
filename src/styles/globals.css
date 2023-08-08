@@ -6,7 +6,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: var(--poppins-font);
+  font-family: var(--poppins-font) !important;
 }
 
 html {
@@ -32,4 +32,8 @@ a:active {
 
 .ant-menu-horizontal {
   border-bottom: none;
+}
+
+.ant-typography{
+  font-family: var(--poppins-font) !important;
 }
