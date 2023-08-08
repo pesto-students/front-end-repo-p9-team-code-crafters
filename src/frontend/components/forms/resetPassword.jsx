@@ -8,7 +8,7 @@ export const ResetPasswordForm = ({handleSubmit, isLoading}) => {
       handleSubmit={handleSubmit}
       isLoading={isLoading}
       formName="forgotPassword"
-      submitBtnText="Send Email"
+      submitBtnText="Submit"
     >
       <Form.Item
         name="password"

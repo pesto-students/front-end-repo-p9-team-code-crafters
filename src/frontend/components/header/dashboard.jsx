@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 
 import {HamburgerIcon} from "@/assets/icons";
-import {Button} from "antd";
+import {Avatar, Button} from "antd";
 import {useRouter} from "next/router";
-import {func} from "prop-types";
+import {func, object} from "prop-types";
 
-export const DashboardHeader = ({handleMenuClick}) => {
+export const DashboardHeader = ({handleMenuClick, userData}) => {
   const router = useRouter();
 
   return (
@@ -20,12 +20,24 @@ export const DashboardHeader = ({handleMenuClick}) => {
         <nav id="mobile-nav" className="flex flex-grow justify-end">
           <Button
             icon={<HamburgerIcon />}
-            className="px-0"
+            className="px-0 md:hidden"
             type="secondary"
             onClick={handleMenuClick}
           >
             <span className="barsBtn"></span>
           </Button>
+          <div className="items-center hidden md:flex">
+            {userData && userData.name ? (
+              <span className="mr-4 text-pink">
+                {userData.name.split(" ")[0]}
+              </span>
+            ) : null}
+            {userData && userData.profile_img ? (
+              <Avatar src={userData.profile_img} size={48} />
+            ) : (
+              <Avatar src="/user-avatar.svg" size={48} />
+            )}
+          </div>
         </nav>
       </div>
     </header>
@@ -34,4 +46,5 @@ export const DashboardHeader = ({handleMenuClick}) => {
 
 DashboardHeader.propTypes = {
   handleMenuClick: func,
+  userData: object,
 };
