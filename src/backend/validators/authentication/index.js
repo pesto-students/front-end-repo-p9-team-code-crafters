@@ -48,3 +48,12 @@ export const signupSchema = yup.object().shape({
     }),
   account_number: yup.string(),
 });
+
+export const resetPasswordSchema = yup.object().shape({
+  user: yup.string().required(),
+  code: yup.string().required(),
+  password: yup
+    .string()
+    .required("password is required")
+    .min(8, "password should be atleast 8 characters"),
+});

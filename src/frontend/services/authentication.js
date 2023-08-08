@@ -51,3 +51,23 @@ export const forgotPassword = (data) => {
     body: JSON.stringify({data}),
   }).then(handleResponse);
 };
+
+export const resetPassword = (data) => {
+  return fetch(getApiUrl("resetPassword"), {
+    method: "POST",
+    headers: {
+      ...getApplicationJsonHeader(),
+    },
+    body: JSON.stringify({data}),
+  }).then(handleResponse);
+};
+
+export const verifyResetPasswordToken = (data) => {
+  return fetch(getApiUrl("verifyResetPasswordToken"), {
+    method: "POST",
+    headers: {
+      ...getApplicationJsonHeader(),
+    },
+    body: JSON.stringify({data}),
+  }).then(handleResponse);
+};
