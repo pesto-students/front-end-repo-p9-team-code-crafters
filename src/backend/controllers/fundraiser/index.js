@@ -23,3 +23,17 @@ export const createFundraiserController = async (request, response) => {
     return response.status(400).send(error.message);
   }
 };
+
+export const getFundraiserByIdController = async (request, response) => {
+  const {id} = request.query;
+  if (!id) return response.status(400).end("data is missing!");
+  try {
+    const fundraiserData = await Fundraiser.findOne({
+      _id: id,
+      is_active: true,
+    });
+    return response.status(200).send({data: fundraiserData});
+  } catch (error) {
+    return response.status(500).send(error.message);
+  }
+};

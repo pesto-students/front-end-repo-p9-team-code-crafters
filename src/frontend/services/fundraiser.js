@@ -17,3 +17,14 @@ export const createFundraiser = (data) => {
     .then(handleResponse)
     .then((data) => data.data);
 };
+
+export const getFundraiserById = (id) => {
+  return fetch(getApiUrl("fundraiser") + "/" + id, {
+    method: "GET",
+    headers: {
+      ...getApplicationJsonHeader(),
+    },
+  })
+    .then(handleResponse)
+    .then((data) => data.data);
+};
