@@ -19,7 +19,7 @@ export default function CreateFundraiserPage() {
 
   return (
     <DashboardLayout setUserData={setUserData} menuKey="fundraiser">
-      <h1>Create Page</h1>
+      <h1>Edit Page</h1>
     </DashboardLayout>
   );
 }

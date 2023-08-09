@@ -9,7 +9,6 @@ export const fundraiserSchema = new Schema(
     },
     description: {
       type: String,
-      required: [true, "description is missing"],
     },
     short_description: {
       type: String,
@@ -21,15 +20,12 @@ export const fundraiserSchema = new Schema(
     category: {
       type: String,
       enum: Object.values(FUNDRAISER_CATEGORY),
-      required: [true, "category is missing"],
     },
     target_amount: {
       type: Number,
-      required: [true, "target amount is missing"],
     },
     target_date: {
       type: Date,
-      required: [true, "target date is missing"],
     },
     status: {
       type: String,

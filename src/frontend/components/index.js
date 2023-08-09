@@ -5,3 +5,4 @@ export * from "./footer";
 export * from "./forms";
 export * from "./wrappers";
 export * from "./drawers";
+export * from "./modals";

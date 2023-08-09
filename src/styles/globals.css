@@ -41,3 +41,11 @@ a:active {
 .shadow {
   box-shadow: 7.5px 0px 15px 0px rgba(0, 0, 0, 0.05);
 }
+
+.primary .ant-select-selector {
+  @apply !border !border-solid !border-pink !text-pink !rounded-3xl;
+}
+
+.primary .ant-select-arrow {
+  @apply !text-pink;
+}

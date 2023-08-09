@@ -62,6 +62,7 @@ export const loginController = async (request, response) => {
       );
       if (isPasswordCorrect) {
         const tokenData = {
+          _id: userData._id,
           name: userData.name,
           email: userData.email,
           contact: userData.contact,

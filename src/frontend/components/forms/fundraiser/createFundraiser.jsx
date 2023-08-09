@@ -1,35 +1,35 @@
 import {Form, Input} from "antd";
 import {func, bool} from "prop-types";
-import {FormWrapper} from "../wrappers";
+import {FormWrapper} from "../../wrappers";
 
-export const ForgotPasswordForm = ({handleSubmit, isLoading}) => {
+export const CreateFundraiserForm = ({handleSubmit, isLoading}) => {
   return (
     <FormWrapper
       handleSubmit={handleSubmit}
       isLoading={isLoading}
-      formName="forgotPassword"
-      submitBtnText="Send Email"
+      formName="createFundraiser"
+      submitBtnText="Create"
     >
       <Form.Item
-        name="email"
+        name="title"
         rules={[
           {
-            type: "email",
-            message: "invalid email!",
+            min: 10,
+            message: "invalid title!",
           },
           {
             required: true,
-            message: "enter email!",
+            message: "please enter title!",
           },
         ]}
       >
-        <Input placeholder="Email Address" />
+        <Input placeholder="Title" />
       </Form.Item>
     </FormWrapper>
   );
 };
 
-ForgotPasswordForm.propTypes = {
+CreateFundraiserForm.propTypes = {
   handleSubmit: func.isRequired,
   isLoading: bool.isRequired,
 };
