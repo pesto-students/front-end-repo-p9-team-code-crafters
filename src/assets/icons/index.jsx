@@ -1,5 +1,14 @@
 import Image from "next/image";
 
+export const EditIcon = (properties) => (
+  <Image
+    width={39}
+    height={39}
+    src="/icons/edit.svg"
+    alt="Edit"
+    {...properties}
+  />
+);
 export const HomeIcon = (properties) => (
   <Image
     width={27}
@@ -28,7 +37,6 @@ export const MailIcon = (properties) => (
     {...properties}
   />
 );
-
 export const FacebookIcon = (properties) => (
   <Image
     width={27}
