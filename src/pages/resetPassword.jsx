@@ -36,9 +36,6 @@ export default function ResetPassword() {
     onError: (error) => {
       message.error(error);
     },
-    onSuccess: (data) => {
-      console.log(data);
-    },
   });
 
   const handleResetPassword = (values, form) => {

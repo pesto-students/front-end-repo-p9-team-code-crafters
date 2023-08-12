@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-array-callback-reference */
 import {FUNDRAISER_STATUS} from "@/appData";
 import {s3Client} from "@/backend/services/aws";
 import {generate16BitCode} from "@/backend/utils";
@@ -105,6 +106,21 @@ export const getFundraiserListByUserIdController = async (
       created_by: userId,
       is_active: true,
     });
+    return response.status(200).send({data: fundraiserData});
+  } catch (error) {
+    return response.status(500).send(error.message);
+  }
+};
+
+export const getFundraiserListController = async (request, response) => {
+  const {page} = request.query;
+  try {
+    let fundraiserData = [];
+    const queryObject = {is_active: true};
+    fundraiserData = await (page === "home"
+      ? Fundraiser.find(queryObject).sort({createdAt: "asc"}).limit(4)
+      : Fundraiser.find(queryObject));
+
     return response.status(200).send({data: fundraiserData});
   } catch (error) {
     return response.status(500).send(error.message);

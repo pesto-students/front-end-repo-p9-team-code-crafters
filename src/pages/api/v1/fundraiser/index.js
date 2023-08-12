@@ -1,4 +1,7 @@
-import {createFundraiserController} from "@/backend/controllers";
+import {
+  createFundraiserController,
+  getFundraiserListController,
+} from "@/backend/controllers";
 import {
   checkAuth,
   checkUserBankdetails,
@@ -11,6 +14,7 @@ const router = createRouter();
 
 router
   .use(connectDB)
+  .get(getFundraiserListController)
   .use(checkAuth)
   .use(checkUserBankdetails)
   .post(createFundraiserController);

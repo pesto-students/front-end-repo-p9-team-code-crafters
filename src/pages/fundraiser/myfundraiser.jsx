@@ -46,9 +46,6 @@ export default function MyFundraiserPage() {
     queryFn: () => getFundraiserListByUserId(userData?._id),
     queryKey: ["getfundraiserListById", userData?._id],
     enabled: !!userData && userData.is_user_verified,
-    onSuccess: (data) => {
-      console.log(data);
-    },
   });
 
   useEffect(() => {
@@ -124,7 +121,7 @@ export default function MyFundraiserPage() {
         {isSuccess ? (
           <Row gutter={[24, 24]}>
             {filteredFundraiserList.map((fundraiser) => (
-              <Col key={fundraiser._id} xs={24} md={12} lg={8}>
+              <Col key={fundraiser._id} xs={24} md={12} lg={6}>
                 <MyFundraiserCard
                   {...fundraiser}
                   btnText="EDIT"
