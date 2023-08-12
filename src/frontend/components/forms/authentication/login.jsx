@@ -1,7 +1,7 @@
 import {Form, Input} from "antd";
 import {func, bool} from "prop-types";
 import Link from "next/link";
-import {FormWrapper} from "../wrappers";
+import {FormWrapper} from "../../wrappers";
 
 export const SigninForm = ({handleSubmit, isLoading}) => {
   return (
