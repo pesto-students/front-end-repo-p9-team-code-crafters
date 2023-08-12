@@ -49,3 +49,28 @@ a:active {
 .primary .ant-select-arrow {
   @apply !text-pink;
 }
+
+
+.ql-container {
+  font-size: 16px !important;
+  padding: 0 12px;
+  font-family: var(--poppins-font) !important;
+  background-color: #FFFFFF;
+}
+
+.ql-container .ql-editor {
+  padding: 0;
+  min-height: 200px;
+}
+
+.ql-container .ql-editor ol,ul {
+  padding: 0;
+}
+
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
+  padding: 12px;
+}
+
+.ql-container.ql-bubble.ql-disabled {
+  padding: 0 !important;
+}

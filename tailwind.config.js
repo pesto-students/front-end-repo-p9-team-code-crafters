@@ -24,6 +24,9 @@ module.exports = {
       minHeight: {
         mainLayout: "calc(100vh - 128px)",
       },
+      spacing: {
+        dashboardmain: "calc(100vh - 128px)",
+      },
     },
     screens: {
       xs: "480px",

@@ -15,4 +15,10 @@ router
   .use(checkUserBankdetails)
   .post(createFundraiserController);
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 export default router.handler(ncErrorHandlers);
