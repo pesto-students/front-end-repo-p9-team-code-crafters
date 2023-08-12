@@ -1,20 +1,26 @@
 import {useRouter} from "next/router";
 import {
   FullPageLoader,
+  LinkButton,
   MainFooter,
   MainHeader,
   MainLayoutDrawer,
 } from "../components";
 import {bool, func, string} from "prop-types";
 import {logout, verifyUser} from "../services";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useQuery} from "@tanstack/react-query";
 import Link from "next/link";
-import {Avatar, Button} from "antd";
+import {Avatar} from "antd";
 
-export default function MainLayout({children, showLoader, setUserData}) {
+export default function MainLayout({
+  children,
+  showLoader,
+  setUserData,
+  menuKey,
+}) {
   const [showMenu, setShowMenu] = useState(false);
-  const [current, setCurrent] = useState("home");
+  const [current, setCurrent] = useState("");
 
   const router = useRouter();
 
@@ -51,21 +57,6 @@ export default function MainLayout({children, showLoader, setUserData}) {
       )}
     </div>
   );
-
-  const LinkButton = ({text, onClickHandler}) => (
-    <Button
-      className="h-10 flex items-center justify-center w-full"
-      type="primary"
-      onClick={onClickHandler}
-    >
-      {text}
-    </Button>
-  );
-
-  LinkButton.propTypes = {
-    text: string,
-    onClickHandler: func,
-  };
 
   const myProfileNavItems = [
     showMenu
@@ -130,6 +121,10 @@ export default function MainLayout({children, showLoader, setUserData}) {
 
     return navItems;
   };
+
+  useEffect(() => {
+    setCurrent(menuKey);
+  }, [menuKey]);
 
   return (
     <>

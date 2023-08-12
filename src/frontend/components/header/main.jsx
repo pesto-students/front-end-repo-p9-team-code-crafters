@@ -35,7 +35,6 @@ export const MainHeader = ({
       <Logo />
 
       <nav id="nav" className="flex flex-grow justify-end">
-        {/* large screen nav */}
         <Menu
           onClick={handleNavigation}
           selectedKeys={[currentKey]}
@@ -44,7 +43,6 @@ export const MainHeader = ({
           className="w-full hidden md:flex justify-end"
         />
 
-        {/* small screen nav */}
         <Button
           icon={<HamburgerIcon />}
           className="px-0 md:hidden"

@@ -12,7 +12,7 @@ export const MainLayoutDrawer = ({
   return (
     <Drawer
       placement="right"
-      closable={true}
+      closable={false}
       onClose={() => setShowDrawer(false)}
       open={showDrawer}
       className="p-0"
@@ -21,6 +21,9 @@ export const MainLayoutDrawer = ({
       }}
       width={250}
     >
+      <div className="text-center mb-8">
+        <span className="font-semibold text-2xl text-pink">ImpactHub</span>
+      </div>
       {userData && (
         <>
           <div className="w-full flex justify-center">

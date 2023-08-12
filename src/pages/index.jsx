@@ -6,7 +6,7 @@ export default function Home() {
   const [userData, setUserData] = useState(null);
   console.log(userData);
   return (
-    <MainLayout setUserData={setUserData}>
+    <MainLayout menuKey="home" setUserData={setUserData}>
       <Hero />
       <Stats />
       <RecentFundraisers />
