@@ -22,6 +22,16 @@ export const generate32BitCode = () => {
   return result;
 };
 
+export const generate16BitCode = () => {
+  let result = "";
+  const charactersLength = characters.length;
+  for (let index = 0; index < 16; index++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
+  return result;
+};
+
 export const getEmailBody = ({subject, htmlContent, messageVersions}) => {
   return {
     sender: {

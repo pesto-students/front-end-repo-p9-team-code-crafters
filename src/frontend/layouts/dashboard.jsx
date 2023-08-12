@@ -19,6 +19,7 @@ export default function DashboardLayout({
   setUserData,
 }) {
   const [showMenu, setShowMenu] = useState(false);
+  const [callVerifyUser, setCallVerifyUser] = useState(true);
   const [current, setCurrent] = useState("");
 
   const router = useRouter();
@@ -32,7 +33,9 @@ export default function DashboardLayout({
     },
     onSuccess: (data) => {
       setUserData(data);
+      setCallVerifyUser(false);
     },
+    enabled: callVerifyUser,
   });
 
   const handleLogout = () => {
@@ -89,7 +92,7 @@ export default function DashboardLayout({
           <div className="bg-white w-56 hidden md:block shadow">
             <Menu selectedKeys={[current]} items={navItems} />
           </div>
-          <div className="flex-1 px-8">
+          <div className="flex-1 px-8 max-h-dashboardmain overflow-y-auto">
             {isLoading ? <Skeleton active /> : children}
           </div>
         </main>

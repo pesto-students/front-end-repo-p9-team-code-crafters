@@ -1,6 +1,6 @@
 import {DatePicker, Form, Input} from "antd";
 import {func, bool} from "prop-types";
-import {FormWrapper} from "../wrappers";
+import {FormWrapper} from "../../wrappers";
 
 export const SignupForm = ({handleSubmit, isLoading}) => {
   return (
