@@ -23,7 +23,7 @@ export default function MyProfile() {
   }, [userData]);
 
   return (
-    <DashboardLayout setUserData={setUserData} menuKey="fundraiser">
+    <DashboardLayout setUserData={setUserData} menuKey="profile">
       <UserInformation userData={userData} />
       <Security />
       <AccountDetails userData={userData} />

@@ -9,7 +9,6 @@ const handleSubmit = () => {};
 
 export const UserInformation = ({userData}) => {
   const [inEditMode, setInEditMode] = useState(false);
-  console.log(userData);
   const {name, email, contact, dob} = userData || {}; // Note: Needs to be corrected
   const formattedDob = moment(dob).format("YYYY-MM-DD");
 

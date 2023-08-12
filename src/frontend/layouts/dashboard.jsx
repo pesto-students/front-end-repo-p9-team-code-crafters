@@ -49,7 +49,7 @@ export default function DashboardLayout({
 
   const navItems = [
     {
-      label: <Link href="/">My Profile</Link>,
+      label: <Link href="/profile">My Profile</Link>,
       key: "profile",
     },
     {
