@@ -6,6 +6,8 @@ import {Fundraiser} from "@/models";
 import formidable from "formidable";
 import fs from "node:fs";
 
+const data_is_missing = "data is missing!";
+
 export const createFundraiserController = async (request, response) => {
   const {userData} = request;
   const form = new formidable.IncomingForm({});
@@ -53,7 +55,7 @@ export const createFundraiserController = async (request, response) => {
 
 export const deleteFundraiserController = async (request, response) => {
   const {id} = request.query;
-  if (!id) return response.status(400).end("data is missing!");
+  if (!id) return response.status(400).end(data_is_missing);
   try {
     const fundraiser = await Fundraiser.findById(id);
     if (!fundraiser) return response.status(400).end("data not found");
@@ -80,10 +82,27 @@ export const deleteFundraiserController = async (request, response) => {
 
 export const getFundraiserByIdController = async (request, response) => {
   const {id} = request.query;
-  if (!id) return response.status(400).end("data is missing!");
+  if (!id) return response.status(400).end(data_is_missing);
   try {
     const fundraiserData = await Fundraiser.findOne({
       _id: id,
+      is_active: true,
+    });
+    return response.status(200).send({data: fundraiserData});
+  } catch (error) {
+    return response.status(500).send(error.message);
+  }
+};
+
+export const getFundraiserListByUserIdController = async (
+  request,
+  response
+) => {
+  const {userId} = request.query;
+  if (!userId) return response.status(400).end(data_is_missing);
+  try {
+    const fundraiserData = await Fundraiser.find({
+      created_by: userId,
       is_active: true,
     });
     return response.status(200).send({data: fundraiserData});

@@ -53,7 +53,7 @@ export default function DashboardLayout({
       key: "profile",
     },
     {
-      label: <Link href="/">My Fundraisers</Link>,
+      label: <Link href="/fundraiser/myfundraiser">My Fundraisers</Link>,
       key: "fundraiser",
     },
 

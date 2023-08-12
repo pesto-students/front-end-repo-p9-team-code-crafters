@@ -25,3 +25,15 @@ export const getFundraiserById = (id) => {
     .then(handleResponse)
     .then((data) => data.data);
 };
+
+export const getFundraiserListByUserId = (id) => {
+  return fetch(getApiUrl("userFundraiserList") + "/" + id, {
+    method: "GET",
+    headers: {
+      ...getApplicationJsonHeader(),
+      ...getAuthHeader(),
+    },
+  })
+    .then(handleResponse)
+    .then((data) => data.data);
+};

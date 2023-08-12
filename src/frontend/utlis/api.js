@@ -12,6 +12,7 @@ const API = {
   resetPassword: "authentication/resetPassword",
   verifyResetPasswordToken: "authentication/resetPassword/verifyToken",
   fundraiser: "/fundraiser",
+  userFundraiserList: "/fundraiser/user",
 };
 
 export const getApiUrl = (urlName) => prefix + get(API, urlName);
