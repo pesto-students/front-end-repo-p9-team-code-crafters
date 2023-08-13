@@ -8,7 +8,8 @@
     "start": "next start",
     "format": "prettier \"**/*.{js,jsx,css,json,scss}\" --write",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.4",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^4.29.25",
     "@tanstack/react-query-devtools": "^4.32.0",
+    "cypress": "^12.17.3",
     "eslint-config-prettier": "^8.9.0",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-prettier": "^5.0.0",
