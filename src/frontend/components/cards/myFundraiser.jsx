@@ -45,20 +45,7 @@ export const MyFundraiserCard = ({
           target_amount={target_amount}
           target_date={target_date}
         />
-        {/* <Text className="text-pink text-right block">{`${percent}%`}</Text> */}
-        {/* <Tooltip className="text-xs" title={`Recieved: ₹${donationAmount}`}>
-          <Progress
-            percent={percent || 0}
-            status="active"
-            showInfo={false}
-            className="mb-0"
-          />
-        </Tooltip>
-        <div className="flex items-center justify-between">
-          <Text className="text-xs">{`${daysToGo} days to go`}</Text>
-          <Text className="text-xs">{`Goal: ₹${target_amount}`}</Text>
-        </div> */}
-        <div className="flex w-full items-center justify-center mt-6">
+        <div className="flex w-full items-center mt-6">
           <Button onClick={clickHandler} type="primary">
             {btnText}
           </Button>
