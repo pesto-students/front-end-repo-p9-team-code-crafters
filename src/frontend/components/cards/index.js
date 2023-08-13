@@ -3,3 +3,4 @@ export * from "./detailsPageMain";
 export * from "./detailsPageSide";
 export * from "./dataSkeleton";
 export * from "./fundraiserNotAvailable";
+export * from "./donationStats";

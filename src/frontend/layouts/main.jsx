@@ -78,7 +78,7 @@ export default function MainLayout({
       key: "myFundraisers",
     },
     {
-      label: <Link href="/">My Donations</Link>,
+      label: <Link href="/donations">My Donations</Link>,
       key: "myDonations",
     },
     {

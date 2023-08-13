@@ -58,7 +58,7 @@ export default function DashboardLayout({
     },
 
     {
-      label: <Link href="/">My Donations</Link>,
+      label: <Link href="/donations">My Donations</Link>,
       key: "donation",
     },
     {

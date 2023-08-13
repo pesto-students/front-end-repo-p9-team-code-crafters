@@ -12,6 +12,7 @@ const API = {
   resetPassword: "authentication/resetPassword",
   verifyResetPasswordToken: "authentication/resetPassword/verifyToken",
   fundraiser: "/fundraiser",
+  donation: "/donation",
   userFundraiserList: "/fundraiser/user",
 };
 

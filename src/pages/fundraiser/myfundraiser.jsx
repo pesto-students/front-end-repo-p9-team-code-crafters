@@ -98,15 +98,18 @@ export default function MyFundraiserPage() {
         </Tooltip>
       </div>
       <div className="mb-8">
-        {isError ||
-        (filteredFundraiserList && filteredFundraiserList.length === 0) ? (
+        {(isError && !isLoading && !isSuccess) ||
+        (filteredFundraiserList &&
+          filteredFundraiserList.length === 0 &&
+          !isLoading &&
+          !isSuccess) ? (
           <FundraiserNotAvailableCard />
         ) : null}
-        {isLoading ? <DataSkeletonCard /> : null}
+        {!isError && !isSuccess && isLoading ? <DataSkeletonCard /> : null}
         {isSuccess && filteredFundraiserList.length > 0 ? (
           <Row gutter={[24, 24]}>
             {filteredFundraiserList.map((fundraiser) => (
-              <Col key={fundraiser._id} xs={24} md={12} lg={6}>
+              <Col key={fundraiser._id} xs={24} md={12} lg={8} xl={6}>
                 <MyFundraiserCard
                   {...fundraiser}
                   btnText="EDIT"

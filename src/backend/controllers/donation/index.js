@@ -45,3 +45,16 @@ export const createDonationController = async (request, response) => {
     return response.status(500).send(error.message);
   }
 };
+
+export const getDonationsByUserController = async (request, response) => {
+  const {userData} = request;
+  try {
+    const donationList = await Donation.find({user: userData._id}).populate(
+      "fundraiser",
+      "_id title"
+    );
+    return response.status(200).send({data: donationList});
+  } catch (error) {
+    return response.status(500).send(error.message);
+  }
+};
