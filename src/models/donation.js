@@ -24,6 +24,7 @@ export const donationSchema = new Schema(
     },
     payment_status: {
       type: String,
+      default: "Done",
     },
   },
   {timestamps: true}

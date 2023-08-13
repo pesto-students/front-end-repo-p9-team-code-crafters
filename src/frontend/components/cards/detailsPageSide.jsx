@@ -1,8 +1,13 @@
-import {array, number, string} from "prop-types";
+import {array, func, number, string} from "prop-types";
 import {FundraiserProgress} from "../progress";
 import {Button} from "antd";
 
-export const DetailsPageSideCard = ({target_amount, target_date, donation}) => {
+export const DetailsPageSideCard = ({
+  target_amount,
+  target_date,
+  donation,
+  onDonateClick,
+}) => {
   return (
     <div className="md:bg-white md:p-6 md:min-h-0">
       <FundraiserProgress
@@ -11,7 +16,12 @@ export const DetailsPageSideCard = ({target_amount, target_date, donation}) => {
         donation={donation}
       />
       <div className="flex flex-col mt-8">
-        <Button className="w-full mr-4 mb-4" type="primary" size="large">
+        <Button
+          onClick={onDonateClick}
+          className="w-full mr-4 mb-4"
+          type="primary"
+          size="large"
+        >
           Donate
         </Button>
         <Button
@@ -29,4 +39,5 @@ DetailsPageSideCard.propTypes = {
   target_amount: number,
   target_date: string,
   donation: array,
+  onDonateClick: func,
 };

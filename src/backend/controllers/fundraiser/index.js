@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable unicorn/no-array-callback-reference */
 import {FUNDRAISER_STATUS} from "@/appData";
 import {s3Client} from "@/backend/services/aws";
@@ -88,7 +89,19 @@ export const getFundraiserByIdController = async (request, response) => {
     const fundraiserData = await Fundraiser.findOne({
       _id: id,
       is_active: true,
-    }).populate("created_by", "_id name email contact is_active");
+    }).populate([
+      {
+        path: "created_by",
+        select: "_id name email contact is_active",
+        model: "User",
+      },
+      {
+        path: "donation",
+        select: "_id amount",
+        model: "Donation",
+      },
+    ]);
+
     return response.status(200).send({data: fundraiserData});
   } catch (error) {
     return response.status(500).send(error.message);
@@ -105,7 +118,18 @@ export const getFundraiserListByUserIdController = async (
     const fundraiserData = await Fundraiser.find({
       created_by: userId,
       is_active: true,
-    });
+    }).populate([
+      {
+        path: "created_by",
+        select: "_id name email contact is_active",
+        model: "User",
+      },
+      {
+        path: "donation",
+        select: "_id amount",
+        model: "Donation",
+      },
+    ]);
     return response.status(200).send({data: fundraiserData});
   } catch (error) {
     return response.status(500).send(error.message);
@@ -118,8 +142,33 @@ export const getFundraiserListController = async (request, response) => {
     let fundraiserData = [];
     const queryObject = {is_active: true};
     fundraiserData = await (page === "home"
-      ? Fundraiser.find(queryObject).sort({createdAt: "asc"}).limit(4)
-      : Fundraiser.find(queryObject));
+      ? Fundraiser.find(queryObject)
+          .populate([
+            {
+              path: "created_by",
+              select: "_id name email contact is_active",
+              model: "User",
+            },
+            {
+              path: "donation",
+              select: "_id amount",
+              model: "Donation",
+            },
+          ])
+          .sort({createdAt: "asc"})
+          .limit(4)
+      : Fundraiser.find(queryObject).populate([
+          {
+            path: "created_by",
+            select: "_id name email contact is_active",
+            model: "User",
+          },
+          {
+            path: "donation",
+            select: "_id amount",
+            model: "Donation",
+          },
+        ]));
 
     return response.status(200).send({data: fundraiserData});
   } catch (error) {

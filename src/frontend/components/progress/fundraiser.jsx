@@ -18,7 +18,10 @@ export const FundraiserProgress = ({
   const percent = useMemo(() => {
     return Math.round((donationAmount / target_amount) * 100);
   }, [donationAmount, target_amount]);
-  const daysToGo = getDaysToGo(target_date);
+  const daysToGo =
+    getDaysToGo(target_date) > 0
+      ? getDaysToGo(target_date) + " days to go"
+      : "Target Date Exceeded";
 
   return (
     <>
@@ -34,7 +37,7 @@ export const FundraiserProgress = ({
       />
       <div className="flex items-center justify-between">
         <Text className="text-xs">{`Goal: ₹${target_amount}`}</Text>
-        <Text className="text-xs">{`${daysToGo} days to go`}</Text>
+        <Text className="text-xs">{daysToGo}</Text>
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import moment from "moment";
-import {array, number, object, string} from "prop-types";
+import {array, func, number, object, string} from "prop-types";
 import {RichText} from "../inputs";
 import {FundraiserProgress} from "../progress";
 import {Button} from "antd";
@@ -13,6 +13,7 @@ export const DetailsPageMainCard = ({
   target_amount,
   target_date,
   donation,
+  onDonateClick,
 }) => {
   return (
     <div className="md:bg-white md:p-6 min-h-[700px] md:min-h-0">
@@ -44,6 +45,7 @@ export const DetailsPageMainCard = ({
       </div>
       <div className="flex flex-col md:flex-row mt-8">
         <Button
+          onClick={onDonateClick}
           className="w-full md:w-64 mr-4 mb-4 md:mb-0"
           type="primary"
           size="large"
@@ -70,4 +72,5 @@ DetailsPageMainCard.propTypes = {
   target_amount: number,
   target_date: string,
   donation: array,
+  onDonateClick: func,
 };

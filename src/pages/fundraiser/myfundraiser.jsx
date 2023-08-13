@@ -1,21 +1,14 @@
 import {FUNDRAISER_CATEGORY} from "@/appData";
-import {MyFundraiserCard} from "@/frontend/components";
+import {
+  DataSkeletonCard,
+  FundraiserNotAvailableCard,
+  MyFundraiserCard,
+} from "@/frontend/components";
 import DashboardLayout from "@/frontend/layouts/dashboard";
 import {getFundraiserListByUserId} from "@/frontend/services";
 import {PlusOutlined} from "@ant-design/icons";
 import {useQuery} from "@tanstack/react-query";
-import {
-  Button,
-  Card,
-  Col,
-  Result,
-  Row,
-  Select,
-  Skeleton,
-  Tooltip,
-  message,
-  notification,
-} from "antd";
+import {Button, Col, Row, Select, Tooltip, message, notification} from "antd";
 import {useRouter} from "next/router";
 import {useEffect, useMemo, useState} from "react";
 
@@ -107,17 +100,9 @@ export default function MyFundraiserPage() {
       <div className="mb-8">
         {isError ||
         (filteredFundraiserList && filteredFundraiserList.length === 0) ? (
-          <Card>
-            <Result title="Fundraiser not available!" />
-          </Card>
+          <FundraiserNotAvailableCard />
         ) : null}
-        {isLoading ? (
-          <Card>
-            <Skeleton active />
-            <Skeleton active />
-            <Skeleton active />
-          </Card>
-        ) : null}
+        {isLoading ? <DataSkeletonCard /> : null}
         {isSuccess && filteredFundraiserList.length > 0 ? (
           <Row gutter={[24, 24]}>
             {filteredFundraiserList.map((fundraiser) => (
