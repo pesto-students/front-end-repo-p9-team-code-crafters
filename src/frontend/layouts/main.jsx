@@ -8,7 +8,7 @@ import {
 } from "../components";
 import {bool, func, string} from "prop-types";
 import {logout, verifyUser} from "../services";
-import {useCallback, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useQuery} from "@tanstack/react-query";
 import Link from "next/link";
 import {Avatar} from "antd";
@@ -87,7 +87,7 @@ export default function MainLayout({
     },
   ];
 
-  const getMainLayoutNavItems = useCallback(() => {
+  const getMainLayoutNavItems = () => {
     const navItems = [
       {
         label: <Link href="/">Home</Link>,
@@ -125,7 +125,7 @@ export default function MainLayout({
     }
 
     return navItems;
-  }, [verifiedUserData]);
+  };
 
   useEffect(() => {
     setCurrent(menuKey);
