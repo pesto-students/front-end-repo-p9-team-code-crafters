@@ -74,3 +74,7 @@ ul {
 .ql-container.ql-bubble.ql-disabled {
   padding: 0 !important;
 }
+
+.ql-container.ql-bubble .ql-editor{
+  @apply p-4 md:p-0
+}

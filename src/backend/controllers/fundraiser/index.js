@@ -88,7 +88,7 @@ export const getFundraiserByIdController = async (request, response) => {
     const fundraiserData = await Fundraiser.findOne({
       _id: id,
       is_active: true,
-    });
+    }).populate("created_by", "_id name email contact is_active");
     return response.status(200).send({data: fundraiserData});
   } catch (error) {
     return response.status(500).send(error.message);

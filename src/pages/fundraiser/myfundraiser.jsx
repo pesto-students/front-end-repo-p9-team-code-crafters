@@ -8,7 +8,7 @@ import {
   Button,
   Card,
   Col,
-  Empty,
+  Result,
   Row,
   Select,
   Skeleton,
@@ -108,7 +108,7 @@ export default function MyFundraiserPage() {
         {isError ||
         (filteredFundraiserList && filteredFundraiserList.length === 0) ? (
           <Card>
-            <Empty />
+            <Result title="Fundraiser not available!" />
           </Card>
         ) : null}
         {isLoading ? (
@@ -118,7 +118,7 @@ export default function MyFundraiserPage() {
             <Skeleton active />
           </Card>
         ) : null}
-        {isSuccess ? (
+        {isSuccess && filteredFundraiserList.length > 0 ? (
           <Row gutter={[24, 24]}>
             {filteredFundraiserList.map((fundraiser) => (
               <Col key={fundraiser._id} xs={24} md={12} lg={6}>

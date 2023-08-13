@@ -15,7 +15,7 @@ export default function CreateFundraiserPage() {
     queryKey: ["getfundraiser", id],
     enabled: !!id && !!userData,
     onSuccess: (data) => {
-      if (userData._id !== data.created_by) {
+      if (data && userData._id !== data.created_by) {
         message.error("Edit access is denied!");
       }
     },

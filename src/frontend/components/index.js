@@ -8,3 +8,4 @@ export * from "./drawers";
 export * from "./inputs";
 export * from "./buttons";
 export * from "./cards";
+export * from "./progress";

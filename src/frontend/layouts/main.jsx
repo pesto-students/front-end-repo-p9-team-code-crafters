@@ -89,7 +89,7 @@ export default function MainLayout({
         key: "home",
       },
       {
-        label: <Link href="/">Discover</Link>,
+        label: <Link href="/fundraiser">Discover</Link>,
         key: "discover",
       },
       {

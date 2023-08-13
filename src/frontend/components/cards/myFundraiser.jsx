@@ -1,9 +1,8 @@
-import {getDaysToGo} from "@/frontend/utlis";
-import {Button, Card, Progress, Tag, Tooltip, Typography} from "antd";
+import {Button, Card, Tag, Typography} from "antd";
 import {array, func, number, string} from "prop-types";
-import {useMemo} from "react";
+import {FundraiserProgress} from "../progress";
 
-const {Title, Text, Paragraph} = Typography;
+const {Title, Paragraph} = Typography;
 
 const ImageWithBackground = ({src}) => (
   <div className="flex bg-gray-300 items-center justify-center h-48 ">
@@ -22,16 +21,6 @@ export const MyFundraiserCard = ({
   clickHandler,
   btnText,
 }) => {
-  const donationAmount = useMemo(() => {
-    return donation && donation.length > 0
-      ? donation.reduce((sum, value) => sum + value?.amount, 0)
-      : 0;
-  }, [donation]);
-  const percent = useMemo(() => {
-    return Math.round((donationAmount / target_amount) * 100);
-  }, [donationAmount, target_amount]);
-  const daysToGo = getDaysToGo(target_date);
-
   return (
     <>
       <Card
@@ -51,8 +40,13 @@ export const MyFundraiserCard = ({
         <Paragraph className="h-11 !mb-2" ellipsis={{rows: 2}}>
           {short_description}
         </Paragraph>
-        <Text className="text-pink text-right block">{`${percent}%`}</Text>
-        <Tooltip className="text-xs" title={`Recieved: ₹${donationAmount}`}>
+        <FundraiserProgress
+          donation={donation}
+          target_amount={target_amount}
+          target_date={target_date}
+        />
+        {/* <Text className="text-pink text-right block">{`${percent}%`}</Text> */}
+        {/* <Tooltip className="text-xs" title={`Recieved: ₹${donationAmount}`}>
           <Progress
             percent={percent || 0}
             status="active"
@@ -63,7 +57,7 @@ export const MyFundraiserCard = ({
         <div className="flex items-center justify-between">
           <Text className="text-xs">{`${daysToGo} days to go`}</Text>
           <Text className="text-xs">{`Goal: ₹${target_amount}`}</Text>
-        </div>
+        </div> */}
         <div className="flex w-full items-center justify-center mt-6">
           <Button onClick={clickHandler} type="primary">
             {btnText}
