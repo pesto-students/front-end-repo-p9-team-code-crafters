@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Hakimuddin Chundawada",
+    "email": "hakim.badri53@gmail.com",
+    "contact": "+917231972532",
+    "password": "c42CtUV#go1@",
+    "role": "USER",
+    "dob": {
+      "$date": "1997-05-14T04:59:43.182Z"
+    },
+    "is_active": true,
+    "is_user_verified": true,
+    "are_bank_details_verified": true,
+    "createdAt": {
+      "$date": "2023-08-04T05:01:52.804Z"
+    },
+    "updatedAt": {
+      "$date": "2023-08-04T05:01:52.804Z"
+    },
+    "__v": 0
+  }
+]
