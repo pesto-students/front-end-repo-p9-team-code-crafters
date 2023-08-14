@@ -17,10 +17,15 @@ export default function Login() {
   const handleLogin = (values, form) => {
     mutateSignin(values, {
       onSuccess: (data) => {
+        const {redirectTo} = router.query;
         saveAuthToken(data.data);
         form.resetFields();
         message.success("Login Successfull!");
-        router.push("/");
+        if (redirectTo) {
+          router.push(redirectTo);
+        } else {
+          router.push("/");
+        }
       },
       onError: (error) => {
         message.error(error);

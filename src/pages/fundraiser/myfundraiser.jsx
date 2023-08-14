@@ -1,7 +1,14 @@
 import {FUNDRAISER_CATEGORY} from "@/appData";
+import {
+  DataSkeletonCard,
+  FundraiserNotAvailableCard,
+  MyFundraiserCard,
+} from "@/frontend/components";
 import DashboardLayout from "@/frontend/layouts/dashboard";
+import {getFundraiserListByUserId} from "@/frontend/services";
 import {PlusOutlined} from "@ant-design/icons";
-import {Button, Select, Tooltip, message, notification} from "antd";
+import {useQuery} from "@tanstack/react-query";
+import {Button, Col, Row, Select, Tooltip, message, notification} from "antd";
 import {useRouter} from "next/router";
 import {useEffect, useMemo, useState} from "react";
 
@@ -23,6 +30,17 @@ export default function MyFundraiserPage() {
     }
   };
 
+  const {
+    data: fundraiserData,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useQuery({
+    queryFn: () => getFundraiserListByUserId(userData?._id),
+    queryKey: ["getfundraiserListById", userData?._id],
+    enabled: !!userData && userData.is_user_verified,
+  });
+
   useEffect(() => {
     if (userData && !userData.is_user_verified) {
       message.error("User is not verified!!");
@@ -40,10 +58,18 @@ export default function MyFundraiserPage() {
     ];
   }, []);
 
+  const filteredFundraiserList = useMemo(() => {
+    const temporaryList =
+      fundraiserData && fundraiserData.length > 0 ? [...fundraiserData] : [];
+    return temporaryList.filter((value) =>
+      fundraiserFilter === "all" ? true : value.category === fundraiserFilter
+    );
+  }, [fundraiserData, fundraiserFilter]);
+
   return (
     <DashboardLayout setUserData={setUserData} menuKey="fundraiser">
       <h3 className="md:hidden font-semibold text-2xl mt-4">My Fundraisers</h3>
-      <div className="flex w-full items-center justify-between mt-4">
+      <div className="flex w-full items-center justify-between mt-4 mb-8">
         <Select
           className="primary w-40"
           defaultValue="all"
@@ -70,6 +96,31 @@ export default function MyFundraiserPage() {
             <PlusOutlined />
           </Button>
         </Tooltip>
+      </div>
+      <div className="mb-8">
+        {(isError && !isLoading && !isSuccess) ||
+        (filteredFundraiserList &&
+          filteredFundraiserList.length === 0 &&
+          !isLoading &&
+          !isSuccess) ? (
+          <FundraiserNotAvailableCard />
+        ) : null}
+        {!isError && !isSuccess && isLoading ? <DataSkeletonCard /> : null}
+        {isSuccess && filteredFundraiserList.length > 0 ? (
+          <Row gutter={[24, 24]}>
+            {filteredFundraiserList.map((fundraiser) => (
+              <Col key={fundraiser._id} xs={24} md={12} lg={8} xl={6}>
+                <MyFundraiserCard
+                  {...fundraiser}
+                  btnText="EDIT"
+                  clickHandler={() =>
+                    router.push("/fundraiser/" + fundraiser?._id + "/edit")
+                  }
+                />
+              </Col>
+            ))}
+          </Row>
+        ) : null}
       </div>
     </DashboardLayout>
   );

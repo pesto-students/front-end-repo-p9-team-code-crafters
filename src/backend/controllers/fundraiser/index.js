@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable unicorn/no-array-callback-reference */
 import {FUNDRAISER_STATUS} from "@/appData";
 import {s3Client} from "@/backend/services/aws";
 import {generate16BitCode} from "@/backend/utils";
@@ -5,6 +7,8 @@ import {createFundraiserSchema} from "@/backend/validators";
 import {Fundraiser} from "@/models";
 import formidable from "formidable";
 import fs from "node:fs";
+
+const data_is_missing = "data is missing!";
 
 export const createFundraiserController = async (request, response) => {
   const {userData} = request;
@@ -53,7 +57,7 @@ export const createFundraiserController = async (request, response) => {
 
 export const deleteFundraiserController = async (request, response) => {
   const {id} = request.query;
-  if (!id) return response.status(400).end("data is missing!");
+  if (!id) return response.status(400).end(data_is_missing);
   try {
     const fundraiser = await Fundraiser.findById(id);
     if (!fundraiser) return response.status(400).end("data not found");
@@ -80,12 +84,92 @@ export const deleteFundraiserController = async (request, response) => {
 
 export const getFundraiserByIdController = async (request, response) => {
   const {id} = request.query;
-  if (!id) return response.status(400).end("data is missing!");
+  if (!id) return response.status(400).end(data_is_missing);
   try {
     const fundraiserData = await Fundraiser.findOne({
       _id: id,
       is_active: true,
-    });
+    }).populate([
+      {
+        path: "created_by",
+        select: "_id name email contact is_active",
+        model: "User",
+      },
+      {
+        path: "donation",
+        select: "_id amount",
+        model: "Donation",
+      },
+    ]);
+
+    return response.status(200).send({data: fundraiserData});
+  } catch (error) {
+    return response.status(500).send(error.message);
+  }
+};
+
+export const getFundraiserListByUserIdController = async (
+  request,
+  response
+) => {
+  const {userId} = request.query;
+  if (!userId) return response.status(400).end(data_is_missing);
+  try {
+    const fundraiserData = await Fundraiser.find({
+      created_by: userId,
+      is_active: true,
+    }).populate([
+      {
+        path: "created_by",
+        select: "_id name email contact is_active",
+        model: "User",
+      },
+      {
+        path: "donation",
+        select: "_id amount",
+        model: "Donation",
+      },
+    ]);
+    return response.status(200).send({data: fundraiserData});
+  } catch (error) {
+    return response.status(500).send(error.message);
+  }
+};
+
+export const getFundraiserListController = async (request, response) => {
+  const {page} = request.query;
+  try {
+    let fundraiserData = [];
+    const queryObject = {is_active: true};
+    fundraiserData = await (page === "home"
+      ? Fundraiser.find(queryObject)
+          .populate([
+            {
+              path: "created_by",
+              select: "_id name email contact is_active",
+              model: "User",
+            },
+            {
+              path: "donation",
+              select: "_id amount",
+              model: "Donation",
+            },
+          ])
+          .sort({createdAt: "asc"})
+          .limit(4)
+      : Fundraiser.find(queryObject).populate([
+          {
+            path: "created_by",
+            select: "_id name email contact is_active",
+            model: "User",
+          },
+          {
+            path: "donation",
+            select: "_id amount",
+            model: "Donation",
+          },
+        ]));
+
     return response.status(200).send({data: fundraiserData});
   } catch (error) {
     return response.status(500).send(error.message);

@@ -20,16 +20,19 @@ export default function MainLayout({
   menuKey,
 }) {
   const [showMenu, setShowMenu] = useState(false);
+  const [verifiedUserData, setVerifiedUserData] = useState(null);
   const [current, setCurrent] = useState("");
 
   const router = useRouter();
 
-  const {data: userData} = useQuery({
+  const {data: newUserData} = useQuery({
     queryFn: () => verifyUser(),
     queryKey: ["verifyUserData"],
-    onError: () => {},
+    onError: () => {
+      setVerifiedUserData(null);
+    },
     onSuccess: (data) => {
-      setUserData(data);
+      setVerifiedUserData(data);
     },
   });
 
@@ -47,11 +50,13 @@ export default function MainLayout({
 
   const UserProfileItem = () => (
     <div className="items-center flex">
-      {userData && userData.name ? (
-        <span className="mr-4 text-pink">{userData.name.split(" ")[0]}</span>
+      {verifiedUserData && verifiedUserData.name ? (
+        <span className="mr-4 text-pink">
+          {verifiedUserData.name.split(" ")[0]}
+        </span>
       ) : null}
-      {userData && userData.profile_img ? (
-        <Avatar src={userData.profile_img} size={48} />
+      {verifiedUserData && verifiedUserData.profile_img ? (
+        <Avatar src={verifiedUserData.profile_img} size={48} />
       ) : (
         <Avatar src="/user-avatar.svg" size={48} />
       )}
@@ -69,11 +74,11 @@ export default function MainLayout({
       key: "profile",
     },
     {
-      label: <Link href="/">My Fundraisers</Link>,
+      label: <Link href="/fundraiser/myfundraiser">My Fundraisers</Link>,
       key: "myFundraisers",
     },
     {
-      label: <Link href="/">My Donations</Link>,
+      label: <Link href="/donations">My Donations</Link>,
       key: "myDonations",
     },
     {
@@ -89,7 +94,7 @@ export default function MainLayout({
         key: "home",
       },
       {
-        label: <Link href="/">Discover</Link>,
+        label: <Link href="/fundraiser">Discover</Link>,
         key: "discover",
       },
       {
@@ -97,13 +102,13 @@ export default function MainLayout({
         key: "about",
       },
     ];
-    if (userData) {
+    if (verifiedUserData) {
       if (showMenu) {
         navItems.push(...myProfileNavItems);
       } else {
         navItems.push({
           label: <UserProfileItem />,
-          key: userData?.name,
+          key: verifiedUserData?.name,
           children: myProfileNavItems,
         });
       }
@@ -126,12 +131,16 @@ export default function MainLayout({
     setCurrent(menuKey);
   }, [menuKey]);
 
+  useEffect(() => {
+    setUserData(verifiedUserData);
+  }, [newUserData, verifiedUserData]);
+
   return (
     <>
       {showLoader ? <FullPageLoader /> : null}
       <>
         <MainHeader
-          userData={userData}
+          userData={verifiedUserData}
           handleMenuClick={() => setShowMenu(true)}
           currentKey={current}
           navItems={getMainLayoutNavItems()}
@@ -147,7 +156,7 @@ export default function MainLayout({
           handleNavigation={handleNavigation}
           currentKey={current}
           navItems={getMainLayoutNavItems()}
-          userData={userData}
+          userData={verifiedUserData}
         />
       </>
     </>
