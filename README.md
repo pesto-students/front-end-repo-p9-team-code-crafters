@@ -1,4 +1,4 @@
-![ImpactHub Logo](public\logo_readme.svg)
+![ImpactHub Logo](public/logo_readme.svg)
 
 Welcome to ImpactHub! Our platform aims to foster kindness, generosity, and social impact by connecting volunteers, donors, and NGOs. We simplify the process of finding donations and volunteering opportunities to support various social causes. Moreover, ImpactHub empowers individuals and organizations to set up fundraising campaigns effortlessly, enabling them to make a meaningful impact on society. With a focus on simplicity and accessibility, we strive to cultivate a culture of giving and amplify the collective efforts of our users for driving positive change.
 
