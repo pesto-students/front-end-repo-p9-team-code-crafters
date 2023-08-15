@@ -28,12 +28,6 @@ export const userDetailsSchema = yup.object().shape({
     }),
   bank_name: yup.string().required(),
   holder_name: yup.string().required(),
-  ifsc: yup
-    .string()
-    .trim()
-    .matches(/^\S{4}\d{7}$/, {
-      excludeEmptyString: true,
-    })
-    .required(),
+  ifsc: yup.string().trim().required(),
   account_number: yup.string().required(),
 });

@@ -5,18 +5,33 @@ import {
   UserInfoForm,
 } from "@/frontend/components";
 import DashboardLayout from "@/frontend/layouts/dashboard";
-import {changePassword, logout} from "@/frontend/services";
-import {useMutation} from "@tanstack/react-query";
-import {Card, message} from "antd";
+import {
+  changePassword,
+  logout,
+  updateUserDetails,
+  updateUserInformation,
+  verifyUser,
+} from "@/frontend/services";
+import {CheckCircleOutlined} from "@ant-design/icons";
+import {useMutation, useQuery} from "@tanstack/react-query";
+import {Card, Tag, message} from "antd";
 import moment from "moment";
 import {useRouter} from "next/router";
 import {useMemo, useState} from "react";
 
 export default function MyProfile() {
   const router = useRouter();
-  const [userData, setUserData] = useState(null);
   const [userInfoEditMode, setUserInfoEditMode] = useState(false);
   const [bankDetailsEditMode, setBankDetailsEditMode] = useState(false);
+
+  const {
+    data: userData,
+    isLoading: loadingUserData,
+    refetch,
+  } = useQuery({
+    queryFn: () => verifyUser(),
+    queryKey: ["verifyUserData"],
+  });
 
   const userInfoData = useMemo(() => {
     return userData
@@ -75,11 +90,41 @@ export default function MyProfile() {
       : {};
   }, [userData]);
 
-  // const {data: userData, isLoading} = useQuery({
-  //   queryFn: () => verifyUser(),
-  //   queryKey: ["verifyUserData"],
-  //   enabled: callVerifyUser,
-  // });
+  const userInformationTitle = useMemo(() => {
+    return (
+      <div className="flex flex-col items-start md:flex-row md:items-center mb-2">
+        <h3 className="text-2xl">User Information</h3>
+        {userData?.is_user_verified ? (
+          <Tag
+            icon={<CheckCircleOutlined />}
+            color="processing"
+            bordered={false}
+            className="md:ml-2 mt-1 md:mt-0"
+          >
+            verified
+          </Tag>
+        ) : null}
+      </div>
+    );
+  }, [userData]);
+
+  const accountDetailsTitle = useMemo(() => {
+    return (
+      <div className="flex flex-col items-start md:flex-row md:items-center mb-2">
+        <h3 className="text-2xl">Account Details</h3>
+        {userData?.are_bank_details_verified ? (
+          <Tag
+            icon={<CheckCircleOutlined />}
+            color="processing"
+            bordered={false}
+            className="md:ml-2 mt-1 md:mt-0"
+          >
+            verified
+          </Tag>
+        ) : null}
+      </div>
+    );
+  }, [userData]);
 
   const {mutate: mutateChangePassword, isLoading: loadingChangePassword} =
     useMutation({
@@ -91,13 +136,13 @@ export default function MyProfile() {
     mutate: mutateUpdateUserInformation,
     isLoading: loadingUpdateUserInformation,
   } = useMutation({
-    mutationFn: (data) => changePassword(data),
+    mutationFn: (data) => updateUserInformation(data),
     mutationKey: "updateuserinformation",
   });
 
   const {mutate: mutateUpdateUserDetails, isLoading: loadingUpdateUserDetails} =
     useMutation({
-      mutationFn: (data) => changePassword(data),
+      mutationFn: (data) => updateUserDetails(data),
       mutationKey: "updateuserdetails",
     });
 
@@ -107,6 +152,7 @@ export default function MyProfile() {
         message.success(data);
         form.resetFields();
         setUserInfoEditMode(false);
+        refetch();
       },
       onError: (error) => message.error(error),
     });
@@ -118,6 +164,7 @@ export default function MyProfile() {
         message.success(data);
         form.resetFields();
         setBankDetailsEditMode(false);
+        refetch();
       },
       onError: (error) => message.error(error),
     });
@@ -146,14 +193,15 @@ export default function MyProfile() {
       showLoader={
         loadingChangePassword ||
         loadingUpdateUserDetails ||
-        loadingUpdateUserInformation
+        loadingUpdateUserInformation ||
+        loadingUserData
       }
       menuKey="profile"
-      setUserData={setUserData}
+      // setUserData={setUserData}
     >
       <ProfileInfoWithFormCard
         stylesClass="mt-8"
-        title={<h3 className="text-2xl">User Information</h3>}
+        title={userInformationTitle}
         isEditable
         data={userInfoData}
         editMode={userInfoEditMode}
@@ -180,7 +228,7 @@ export default function MyProfile() {
       </Card>
       <ProfileInfoWithFormCard
         stylesClass="mt-8 mb-12"
-        title={<h3 className="text-2xl">Account Details</h3>}
+        title={accountDetailsTitle}
         isEditable
         data={userInfoBankData}
         editMode={bankDetailsEditMode}

@@ -54,10 +54,6 @@ export const UserBankDetailsForm = ({
             message: "Please input ifsc code!",
             whitespace: true,
           },
-          {
-            pattern: /^\S{4}\d{7}$/,
-            message: "invalid ifsc code!",
-          },
         ]}
       >
         <Input placeholder="IFSC code" />

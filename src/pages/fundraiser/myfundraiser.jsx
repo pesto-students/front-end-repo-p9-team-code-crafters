@@ -19,7 +19,11 @@ export default function MyFundraiserPage() {
   const router = useRouter();
 
   const onClickCreateFundraiser = () => {
-    if (userData.are_bank_details_verified) {
+    if (
+      userData &&
+      userData.bank_details &&
+      userData.bank_details.account_number
+    ) {
       router.push("/fundraiser/create");
     } else {
       notification.error({

@@ -29,6 +29,7 @@ export const updateUserVerificationDetailsController = async (
     try {
       await User.findByIdAndUpdate(request.userData._id, {
         bank_details: {bank_name, holder_name, ifsc, account_number},
+        are_bank_details_verified: false,
       });
       return response.status(200).send("User Information is updated!");
     } catch (error) {

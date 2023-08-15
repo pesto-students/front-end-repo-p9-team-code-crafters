@@ -13,7 +13,7 @@ export const ProfileInfoWithFormCard = ({
 }) => {
   return (
     <Card className={stylesClass + " shadow-md"}>
-      <div className="flex items-end justify-between mb-4">
+      <div className="flex items-start justify-between mb-4">
         {title}
         {isEditable && !editMode ? (
           <Tooltip title="edit">
