@@ -9,12 +9,10 @@ export default function CreateFundraiserPage() {
   const router = useRouter();
   const {id} = router.query;
   const [userData, setUserData] = useState(null);
-  const [callQuery, setCallQuery] = useState(true);
 
   const {data: fundraiserData, isLoading} = useQuery({
     queryFn: () => getFundraiserById(id),
     queryKey: ["getfundraiser", id],
-    enabled: !!id && !!userData && callQuery,
     cacheTime: Number.POSITIVE_INFINITY,
     onSuccess: (data) => {
       if (data && userData._id !== data.created_by._id) {
@@ -34,10 +32,6 @@ export default function CreateFundraiserPage() {
       router.push("/");
     }
   }, [userData]);
-
-  useEffect(() => {
-    setCallQuery(false);
-  }, []);
 
   return (
     <DashboardLayout

@@ -113,11 +113,11 @@ export default function MyFundraiserPage() {
         {isSuccess && filteredFundraiserList.length > 0 ? (
           <Row gutter={[24, 24]}>
             {filteredFundraiserList.map((fundraiser) => (
-              <Col key={fundraiser._id} xs={24} md={12} lg={8} xl={6}>
+              <Col key={fundraiser._id} xs={24} md={12} lg={8} xxl={6}>
                 <MyFundraiserCard
                   {...fundraiser}
-                  btnText="EDIT"
-                  clickHandler={() =>
+                  showStatus={true}
+                  onCardClick={() =>
                     router.push("/fundraiser/" + fundraiser?._id + "/edit")
                   }
                 />

@@ -17,7 +17,7 @@ import {USER_ROLES} from "@/appData";
 export default function MainLayout({
   children,
   showLoader,
-  setUserData,
+  setUserData = () => {},
   menuKey,
 }) {
   const [showMenu, setShowMenu] = useState(false);

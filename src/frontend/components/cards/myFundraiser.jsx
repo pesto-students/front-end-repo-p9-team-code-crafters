@@ -1,6 +1,7 @@
-import {Button, Card, Tag, Typography} from "antd";
-import {array, func, number, string} from "prop-types";
+import {Card, Tag, Typography} from "antd";
+import {array, bool, func, node, number, string} from "prop-types";
 import {FundraiserProgress} from "../progress";
+import {FUNDRAISER_STATUS} from "@/appData";
 
 const {Title, Paragraph} = Typography;
 
@@ -10,6 +11,15 @@ const ImageWithBackground = ({src}) => (
   </div>
 );
 
+const statusColors = {
+  [FUNDRAISER_STATUS.DRAFT]: "default",
+  [FUNDRAISER_STATUS.CLOSED]: "green",
+  [FUNDRAISER_STATUS.VERIFICATION_PENDING]: "gold",
+  [FUNDRAISER_STATUS.VERIFIED]: "blue",
+  [FUNDRAISER_STATUS.REQUESTED_WITHDRAWAL]: "cyan",
+  [FUNDRAISER_STATUS.FUNDS_PROCESSED]: "purple",
+};
+
 export const MyFundraiserCard = ({
   category,
   title,
@@ -17,9 +27,11 @@ export const MyFundraiserCard = ({
   target_amount,
   target_date,
   image,
+  status,
   donation = [],
-  clickHandler,
-  btnText,
+  onCardClick,
+  cta = null,
+  showStatus = false,
 }) => {
   return (
     <>
@@ -28,11 +40,15 @@ export const MyFundraiserCard = ({
         cover={
           <ImageWithBackground src={process.env.NEXT_PUBLIC_S3_URL + image} />
         }
-        bodyStyle={{padding: "12px"}}
+        bodyStyle={{padding: "24px 12px"}}
+        onClick={onCardClick}
       >
-        <Tag className="bg-pink text-white rounded-full border-none font-normal px-2 mb-2">
-          {category}
-        </Tag>
+        <div>
+          <Tag className="bg-pink text-white rounded-full border-none font-normal px-2 mb-2">
+            {category}
+          </Tag>
+          {showStatus ? <Tag color={statusColors[status]}>{status}</Tag> : null}
+        </div>
 
         <Title level={4} ellipsis>
           {title}
@@ -45,11 +61,12 @@ export const MyFundraiserCard = ({
           target_amount={target_amount}
           target_date={target_date}
         />
-        <div className="flex w-full items-center mt-6">
+        {cta}
+        {/* <div className="flex w-full items-center mt-6">
           <Button onClick={clickHandler} type="primary">
             {btnText}
           </Button>
-        </div>
+        </div> */}
       </Card>
     </>
   );
@@ -67,6 +84,8 @@ MyFundraiserCard.propTypes = {
   target_date: string,
   donation: array,
   image: string,
-  clickHandler: func,
-  btnText: string,
+  status: string,
+  onCardClick: func,
+  cta: node,
+  showStatus: bool,
 };
