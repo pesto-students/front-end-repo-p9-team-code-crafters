@@ -15,6 +15,16 @@ export const createFundraiser = (data) => {
   }).then(handleResponse);
 };
 
+export const editFundraiser = (id, data) => {
+  return fetch(getApiUrl("fundraiser") + "/" + id, {
+    method: "PUT",
+    headers: {
+      ...getAuthHeader(),
+    },
+    body: data,
+  }).then(handleResponse);
+};
+
 export const getFundraiserList = (page) => {
   return fetch(getApiUrl("fundraiser") + "?page=" + page, {
     method: "GET",

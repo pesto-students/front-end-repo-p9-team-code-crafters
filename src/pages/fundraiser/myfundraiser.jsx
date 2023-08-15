@@ -28,9 +28,10 @@ export default function MyFundraiserPage() {
     } else {
       notification.error({
         message: "Cannot Create Fundraiser",
-        description: "Please verify your bank details to create a fundraiser!",
+        description: "Please update your bank details to create a fundraiser!",
         duration: 2,
       });
+      router.push("/profile");
     }
   };
 
@@ -113,7 +114,7 @@ export default function MyFundraiserPage() {
         {isSuccess && filteredFundraiserList.length > 0 ? (
           <Row gutter={[24, 24]}>
             {filteredFundraiserList.map((fundraiser) => (
-              <Col key={fundraiser._id} xs={24} md={12} lg={8} xxl={6}>
+              <Col key={fundraiser._id} xs={24} md={12} lg={12} xl={8} xxl={6}>
                 <MyFundraiserCard
                   {...fundraiser}
                   showStatus={true}

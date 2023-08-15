@@ -1,9 +1,13 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable unicorn/no-array-callback-reference */
 import {FUNDRAISER_STATUS} from "@/appData";
 import {s3Client} from "@/backend/services/aws";
 import {generate16BitCode} from "@/backend/utils";
-import {createFundraiserSchema} from "@/backend/validators";
+import {
+  createFundraiserSchema,
+  editFundraiserSchema,
+} from "@/backend/validators";
 import {Fundraiser} from "@/models";
 import formidable from "formidable";
 import fs from "node:fs";
@@ -46,6 +50,77 @@ export const createFundraiserController = async (request, response) => {
             }
           }
         );
+      } catch (error) {
+        return response.status(500).send(error.message);
+      }
+    } catch (error) {
+      return response.status(400).send(error.message);
+    }
+  });
+};
+
+export const editFundraiserController = async (request, response) => {
+  const form = new formidable.IncomingForm({});
+  form.parse(request, async (error, fields, files) => {
+    if (error) {
+      return response
+        .status(500)
+        .send("An error occurred while processing the form.");
+    }
+    try {
+      let fundraiserObject = await editFundraiserSchema.validate(fields);
+      let editObject = {
+        ...fundraiserObject,
+        status: FUNDRAISER_STATUS.VERIFICATION_PENDING,
+      };
+      delete editObject.oldImageKey;
+      let filename = "";
+      try {
+        if (files && files.image) {
+          filename =
+            generate16BitCode() + "." + files.image.mimetype.split("/")[1];
+          s3Client.deleteObject(
+            {
+              Bucket: process.env.S3_BUCKET_NAME,
+              Key: fundraiserObject.oldImageKey,
+            },
+            async (error) => {
+              if (error) {
+                return response.status(500).send(error.message);
+              }
+              s3Client.putObject(
+                {
+                  Bucket: process.env.S3_BUCKET_NAME,
+                  Key: filename,
+                  Body: fs.createReadStream(files.image.filepath),
+                  ACL: "public-read",
+                },
+                async (error) => {
+                  if (error) {
+                    return response.status(500).send(error.message);
+                  }
+                  editObject.image = filename;
+                  try {
+                    await Fundraiser.findByIdAndUpdate(
+                      request.query.id,
+                      editObject
+                    );
+                    return response.status(200).send("Fundraiser Updated!!");
+                  } catch (error) {
+                    return response.status(500).send(error.message);
+                  }
+                }
+              );
+            }
+          );
+        } else {
+          try {
+            await Fundraiser.findByIdAndUpdate(request.query.id, editObject);
+            return response.status(200).send("Fundraiser Updated!!");
+          } catch (error) {
+            return response.status(500).send(error.message);
+          }
+        }
       } catch (error) {
         return response.status(500).send(error.message);
       }

@@ -58,9 +58,8 @@ export default function CreateFundraiserPage() {
     >
       <div className="-mx-8 px-8 py-6 bg-lightpink mb-8">
         <Button
-          onClick={() => router.push("/fundraiser/myfundraiser")}
-          type="link"
-          className="p-0"
+          onClick={() => router.back()}
+          className="mb-2 border-pink text-pink"
         >
           Go Back
         </Button>

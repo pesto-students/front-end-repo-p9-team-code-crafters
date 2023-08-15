@@ -7,7 +7,7 @@ import {
   Select,
   Upload,
 } from "antd";
-import {func, bool} from "prop-types";
+import {func, bool, object, string} from "prop-types";
 import {FormWrapper} from "../../wrappers";
 import {TextEditor} from "../../inputs";
 import {UploadOutlined} from "@ant-design/icons";
@@ -20,13 +20,19 @@ const normFile = (event) => {
   return event?.fileList;
 };
 
-export const CreateFundraiserForm = ({handleSubmit, isLoading}) => {
+export const CreateFundraiserForm = ({
+  handleSubmit,
+  isLoading,
+  initialValues,
+  submitButtonText = "Create",
+}) => {
   return (
     <FormWrapper
       handleSubmit={handleSubmit}
       isLoading={isLoading}
       formName="createFundraiser"
-      submitBtnText="Create"
+      submitBtnText={submitButtonText}
+      initialValues={initialValues}
     >
       <Form.Item
         label={<span className="text-lg text-fontBlack">Title</span>}
@@ -141,4 +147,6 @@ export const CreateFundraiserForm = ({handleSubmit, isLoading}) => {
 CreateFundraiserForm.propTypes = {
   handleSubmit: func.isRequired,
   isLoading: bool.isRequired,
+  initialValues: object,
+  submitButtonText: string,
 };
