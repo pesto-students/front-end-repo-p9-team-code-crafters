@@ -1,17 +1,27 @@
 import {DatePicker, Form, Input} from "antd";
-import {func, bool} from "prop-types";
+import {func, bool, object} from "prop-types";
 import {FormWrapper} from "../../wrappers";
 
-export const SignupForm = ({handleSubmit, isLoading}) => {
+export const UserInfoForm = ({
+  handleSubmit,
+  isLoading,
+  initialValues,
+  showCancel,
+  onCancelClick,
+}) => {
   return (
     <FormWrapper
       handleSubmit={handleSubmit}
       isLoading={isLoading}
-      formName="signup"
-      submitBtnText="Sign up"
+      formName="userInfo"
+      submitBtnText="Update"
+      initialValues={initialValues}
+      showCancel={showCancel}
+      onCancelClick={onCancelClick}
     >
       <Form.Item
         name="name"
+        label="Name"
         rules={[
           {
             required: true,
@@ -24,6 +34,7 @@ export const SignupForm = ({handleSubmit, isLoading}) => {
       </Form.Item>
       <Form.Item
         name="email"
+        label="Email"
         rules={[
           {
             type: "email",
@@ -35,10 +46,11 @@ export const SignupForm = ({handleSubmit, isLoading}) => {
           },
         ]}
       >
-        <Input placeholder="Email Address" />
+        <Input disabled placeholder="Email Address" />
       </Form.Item>
       <Form.Item
         name="contact"
+        label="Contact"
         rules={[
           {
             required: true,
@@ -54,6 +66,7 @@ export const SignupForm = ({handleSubmit, isLoading}) => {
       </Form.Item>
       <Form.Item
         name="dob"
+        label="Date of Birth"
         rules={[
           {
             type: "object",
@@ -64,48 +77,14 @@ export const SignupForm = ({handleSubmit, isLoading}) => {
       >
         <DatePicker className="w-full" placeholder="Date of Birth" />
       </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: "enter password!",
-          },
-        ]}
-        hasFeedback
-      >
-        <Input.Password placeholder="Password" />
-      </Form.Item>
-      <Form.Item
-        name="confirm"
-        dependencies={["password"]}
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: "confirm your password!",
-          },
-          ({getFieldValue}) => ({
-            validator(_, value) {
-              if (!value || getFieldValue("password") === value) {
-                return Promise.resolve();
-              }
-              return Promise.reject(new Error("passwords do not match!"));
-            },
-          }),
-        ]}
-      >
-        <Input.Password placeholder="Confirm Password" />
-      </Form.Item>
-      <p className="text-center text-lightgray text-xs mb-6">
-        By continuing, you agree to the ImpactHub terms of service and privacy
-        notice.
-      </p>
     </FormWrapper>
   );
 };
 
-SignupForm.propTypes = {
+UserInfoForm.propTypes = {
   handleSubmit: func.isRequired,
   isLoading: bool.isRequired,
+  initialValues: object,
+  showCancel: bool,
+  onCancelClick: func,
 };

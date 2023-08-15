@@ -10,10 +10,12 @@ const API = {
   verify: "authentication/verify",
   signup: "authentication/signup",
   resetPassword: "authentication/resetPassword",
+  changePassword: "authentication/changePassword",
   verifyResetPasswordToken: "authentication/resetPassword/verifyToken",
   fundraiser: "/fundraiser",
   donation: "/donation",
   userFundraiserList: "/fundraiser/user",
+  user: "/user",
 };
 
 export const getApiUrl = (urlName) => prefix + get(API, urlName);

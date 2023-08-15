@@ -16,7 +16,7 @@ export default function DashboardLayout({
   children,
   showLoader,
   menuKey,
-  setUserData,
+  setUserData = () => {},
 }) {
   const [showMenu, setShowMenu] = useState(false);
   const [callVerifyUser, setCallVerifyUser] = useState(true);

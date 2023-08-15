@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-export const userSchema = yup.object().shape({
+export const userInformationSchema = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().trim().required().email(),
   contact: yup
@@ -10,9 +10,10 @@ export const userSchema = yup.object().shape({
     .matches(/^\+?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4,6}$/, {
       excludeEmptyString: true,
     }),
-  password: yup.string().required(),
   dob: yup.date().required(),
-  profile_img: yup.string().url(),
+});
+
+export const userDetailsSchema = yup.object().shape({
   pan: yup
     .string()
     .trim()
@@ -25,13 +26,14 @@ export const userSchema = yup.object().shape({
     .matches(/^d{12}$/, {
       excludeEmptyString: true,
     }),
-  bank_name: yup.string(),
-  holder_name: yup.string(),
+  bank_name: yup.string().required(),
+  holder_name: yup.string().required(),
   ifsc: yup
     .string()
     .trim()
     .matches(/^\S{4}\d{7}$/, {
       excludeEmptyString: true,
-    }),
-  account_number: yup.string(),
+    })
+    .required(),
+  account_number: yup.string().required(),
 });

@@ -1,4 +1,6 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import {
+  changePasswordSchema,
   loginSchema,
   resetPasswordSchema,
   signupSchema,
@@ -210,4 +212,48 @@ export const resetPasswordController = async (request, response) => {
     .catch((error) => {
       return response.status(400).send(error.message);
     });
+};
+
+export const changePasswordController = async (request, response) => {
+  const {data} = request.body;
+  if (!data) return response.status(400).end("data is missing!");
+  try {
+    const changePasswordData = await changePasswordSchema.validate(data);
+    const {currentPassword, password} = changePasswordData;
+    try {
+      let userData = await User.findOne({
+        _id: request.userData._id,
+        is_active: true,
+      });
+
+      if (!userData) return response.status(400).send("user is deactivated!");
+
+      const isPasswordCorrect = await bcrypt.compare(
+        currentPassword,
+        userData.password
+      );
+
+      if (!isPasswordCorrect) {
+        return response.status(400).send("Incorrect Password!");
+      }
+
+      const encryptedPassword = await bcrypt
+        .genSalt(Number(process.env.SALT_ROUNDS))
+        .then((salt) => {
+          return bcrypt.hash(password, salt);
+        })
+        .then((hash) => {
+          return hash;
+        });
+      await User.findByIdAndUpdate(request.userData._id, {
+        password: encryptedPassword,
+      });
+
+      return response.status(200).send("Password has been updated!");
+    } catch (error) {
+      return response.status(500).send(error.message);
+    }
+  } catch (error) {
+    return response.status(400).send(error.message);
+  }
 };
