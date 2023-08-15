@@ -13,6 +13,7 @@ const API = {
   changePassword: "authentication/changePassword",
   verifyResetPasswordToken: "authentication/resetPassword/verifyToken",
   fundraiser: "/fundraiser",
+  adminfundraiser: "/fundraiser/admin",
   donation: "/donation",
   userFundraiserList: "/fundraiser/user",
   user: "/user",

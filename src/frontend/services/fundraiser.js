@@ -26,6 +26,18 @@ export const getFundraiserList = (page) => {
     .then((data) => data.data);
 };
 
+export const getAdminFundraiserList = () => {
+  return fetch(getApiUrl("adminfundraiser"), {
+    method: "GET",
+    headers: {
+      ...getApplicationJsonHeader(),
+      ...getAuthHeader(),
+    },
+  })
+    .then(handleResponse)
+    .then((data) => data.data);
+};
+
 export const getFundraiserById = (id) => {
   return fetch(getApiUrl("fundraiser") + "/" + id, {
     method: "GET",
@@ -47,4 +59,26 @@ export const getFundraiserListByUserId = (id) => {
   })
     .then(handleResponse)
     .then((data) => data.data);
+};
+
+export const updateFundraiserActivation = (data) => {
+  return fetch(getApiUrl("adminfundraiser"), {
+    method: "PUT",
+    headers: {
+      ...getApplicationJsonHeader(),
+      ...getAuthHeader(),
+    },
+    body: JSON.stringify({data}),
+  }).then(handleResponse);
+};
+
+export const updateFundraiserStatus = (data) => {
+  return fetch(getApiUrl("adminfundraiser"), {
+    method: "PATCH",
+    headers: {
+      ...getApplicationJsonHeader(),
+      ...getAuthHeader(),
+    },
+    body: JSON.stringify({data}),
+  }).then(handleResponse);
 };

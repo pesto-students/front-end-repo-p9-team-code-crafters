@@ -188,7 +188,7 @@ export default function AdminUsers() {
       setUserData={setUserData}
       menuKey="users"
     >
-      <h3 className="md:hidden font-semibold text-2xl mt-4">My Fundraisers</h3>
+      <h3 className="md:hidden font-semibold text-2xl mt-4">Users List</h3>
       <Card className="md:hidden mt-8">
         <Result title="Use a bigger screen for full functionality!" />
       </Card>
@@ -198,7 +198,11 @@ export default function AdminUsers() {
           columns={getColumns({markBankDetailsVerified, markUserActive})}
           dataSource={
             isSuccess && !isLoading
-              ? userList.map((value) => ({...value, ...value.bank_details}))
+              ? userList.map((value) => ({
+                  ...value,
+                  ...value.bank_details,
+                  key: value._id,
+                }))
               : []
           }
           rowClassName={getRowClassName}

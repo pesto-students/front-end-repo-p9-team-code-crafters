@@ -140,7 +140,7 @@ export const getFundraiserListController = async (request, response) => {
   const {page} = request.query;
   try {
     let fundraiserData = [];
-    const queryObject = {is_active: true};
+    const queryObject = {is_active: true, status: FUNDRAISER_STATUS.VERIFIED};
     fundraiserData = await (page === "home"
       ? Fundraiser.find(queryObject)
           .populate([
@@ -171,6 +171,64 @@ export const getFundraiserListController = async (request, response) => {
         ]));
 
     return response.status(200).send({data: fundraiserData});
+  } catch (error) {
+    return response.status(500).send(error.message);
+  }
+};
+
+export const getAdminFundraiserListController = async (_request, response) => {
+  try {
+    const fundraiserData = await Fundraiser.find(
+      {},
+      "-description -image -donation -__v"
+    ).populate([
+      {
+        path: "created_by",
+        select: "_id name email contact is_active",
+        model: "User",
+      },
+      {
+        path: "donation",
+        select: "_id amount",
+        model: "Donation",
+      },
+    ]);
+    return response.status(200).send({data: fundraiserData});
+  } catch (error) {
+    return response.status(500).send(error.message);
+  }
+};
+
+export const updateFundraiserActivationController = async (
+  request,
+  response
+) => {
+  const {data} = request.body;
+  if (!data || !data.id || !data.value)
+    return response.status(400).end("data is missing");
+  try {
+    const fundraiserData = await Fundraiser.findByIdAndUpdate(data.id, {
+      is_active: data.value === "true",
+    });
+    if (!fundraiserData)
+      return response.status(200).send("Fundraiser Not found !");
+    return response.status(200).send("Fundraiser is updated!");
+  } catch (error) {
+    return response.status(500).send(error.message);
+  }
+};
+
+export const updateFundraiserStatusController = async (request, response) => {
+  const {data} = request.body;
+  if (!data || !data.id || !data.status)
+    return response.status(400).end("data is missing");
+  try {
+    const fundraiserData = await Fundraiser.findByIdAndUpdate(data.id, {
+      status: data.status,
+    });
+    if (!fundraiserData)
+      return response.status(200).send("Fundraiser Not found !");
+    return response.status(200).send("Fundraiser is updated!");
   } catch (error) {
     return response.status(500).send(error.message);
   }
