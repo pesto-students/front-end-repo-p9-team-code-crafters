@@ -35,7 +35,7 @@ export const createFundraiserController = async (request, response) => {
             if (error) {
               return response.status(500).send(error.message);
             }
-            fundraiserObject.status = FUNDRAISER_STATUS.DRAFT;
+            fundraiserObject.status = FUNDRAISER_STATUS.VERIFICATION_PENDING;
             fundraiserObject.image = filename;
             fundraiserObject.created_by = userData._id;
             try {

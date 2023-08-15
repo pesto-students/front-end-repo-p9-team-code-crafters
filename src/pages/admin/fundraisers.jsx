@@ -168,7 +168,9 @@ export default function AdminFundraiser() {
       onOk: () => {
         mutateUpdateFundraiserStatus({
           id: id,
-          status: value ? FUNDRAISER_STATUS.VERIFIED : FUNDRAISER_STATUS.DRAFT,
+          status: value
+            ? FUNDRAISER_STATUS.VERIFIED
+            : FUNDRAISER_STATUS.VERIFICATION_PENDING,
         });
       },
       cancelButtonProps: {
