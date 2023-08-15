@@ -94,7 +94,7 @@ export default function DashboardLayout({
         key: "adminFundraisers",
       },
     ];
-    return userData.role === USER_ROLES.ADMIN
+    return userData && userData.role === USER_ROLES.ADMIN
       ? [...initialNavItems, ...adminItems, ...defaultItems]
       : [...initialNavItems, ...defaultItems];
   };
