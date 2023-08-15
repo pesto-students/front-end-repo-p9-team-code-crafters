@@ -12,6 +12,7 @@ import {useEffect, useState} from "react";
 import {useQuery} from "@tanstack/react-query";
 import Link from "next/link";
 import {Avatar} from "antd";
+import {USER_ROLES} from "@/appData";
 
 export default function MainLayout({
   children,
@@ -81,6 +82,18 @@ export default function MainLayout({
       label: <Link href="/donations">My Donations</Link>,
       key: "myDonations",
     },
+    verifiedUserData && verifiedUserData.role === USER_ROLES.ADMIN
+      ? {
+          label: <Link href="/admin/users">User List</Link>,
+          key: "users",
+        }
+      : null,
+    verifiedUserData && verifiedUserData.role === USER_ROLES.ADMIN
+      ? {
+          label: <Link href="/admin/fundraisers">Fundraiser List</Link>,
+          key: "adminFundraisers",
+        }
+      : null,
     {
       label: <LinkButton text="Logout" onClickHandler={handleLogout} />,
       key: "logout",

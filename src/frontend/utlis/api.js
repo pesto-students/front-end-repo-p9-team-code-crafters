@@ -16,6 +16,8 @@ const API = {
   donation: "/donation",
   userFundraiserList: "/fundraiser/user",
   user: "/user",
+  userActivation: "/user/markUserActivation",
+  verifyBankDetails: "/user/verifyBankDetails",
 };
 
 export const getApiUrl = (urlName) => prefix + get(API, urlName);

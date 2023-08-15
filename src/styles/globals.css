@@ -44,6 +44,14 @@ a:active {
   font-size: 16px !important;
 }
 
+.ant-btn-primary:hover{
+  @apply !bg-pink;
+}
+
+.ant-btn-default:hover{
+  @apply !border-pink !text-pink ;
+}
+
 .shadow {
   box-shadow: 7.5px 0px 15px 0px rgba(0, 0, 0, 0.05);
 }
