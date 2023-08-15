@@ -1,4 +1,6 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import {
+  changePasswordSchema,
   loginSchema,
   resetPasswordSchema,
   signupSchema,
@@ -63,16 +65,7 @@ export const loginController = async (request, response) => {
       if (isPasswordCorrect) {
         const tokenData = {
           _id: userData._id,
-          name: userData.name,
-          email: userData.email,
-          contact: userData.contact,
           role: userData.role,
-          dob: userData.dob,
-          profile_img: userData.profile_img,
-          verification_details: userData.verification_details,
-          bank_details: userData.bank_details,
-          is_user_verified: userData.is_user_verified,
-          are_bank_details_verified: userData.are_bank_details_verified,
         };
         const authToken = sign(tokenData, process.env.ACCESS_TOKEN_SALT, {
           expiresIn: "20h",
@@ -92,8 +85,16 @@ export const verifyUserController = async (request, response) => {
   if (!data || data === "")
     return response.status(401).end("token is missing!");
   try {
-    const userData = verify(data, process.env.ACCESS_TOKEN_SALT);
-    return response.status(200).send(userData);
+    const tokenData = verify(data, process.env.ACCESS_TOKEN_SALT);
+    try {
+      const userData = await User.findOne(
+        {_id: tokenData._id},
+        "_id name email contact dob role profile_img bank_details is_active is_user_verified are_bank_details_verified"
+      );
+      return response.status(200).send(userData);
+    } catch (error) {
+      return response.status(500).send(error.message);
+    }
   } catch (error) {
     return error.name === "TokenExpiredError"
       ? response.status(403).send("user session has expired")
@@ -210,4 +211,48 @@ export const resetPasswordController = async (request, response) => {
     .catch((error) => {
       return response.status(400).send(error.message);
     });
+};
+
+export const changePasswordController = async (request, response) => {
+  const {data} = request.body;
+  if (!data) return response.status(400).end("data is missing!");
+  try {
+    const changePasswordData = await changePasswordSchema.validate(data);
+    const {currentPassword, password} = changePasswordData;
+    try {
+      let userData = await User.findOne({
+        _id: request.userData._id,
+        is_active: true,
+      });
+
+      if (!userData) return response.status(400).send("user is deactivated!");
+
+      const isPasswordCorrect = await bcrypt.compare(
+        currentPassword,
+        userData.password
+      );
+
+      if (!isPasswordCorrect) {
+        return response.status(400).send("Incorrect Password!");
+      }
+
+      const encryptedPassword = await bcrypt
+        .genSalt(Number(process.env.SALT_ROUNDS))
+        .then((salt) => {
+          return bcrypt.hash(password, salt);
+        })
+        .then((hash) => {
+          return hash;
+        });
+      await User.findByIdAndUpdate(request.userData._id, {
+        password: encryptedPassword,
+      });
+
+      return response.status(200).send("Password has been updated!");
+    } catch (error) {
+      return response.status(500).send(error.message);
+    }
+  } catch (error) {
+    return response.status(400).send(error.message);
+  }
 };

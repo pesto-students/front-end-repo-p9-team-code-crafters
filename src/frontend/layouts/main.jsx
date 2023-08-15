@@ -70,7 +70,7 @@ export default function MainLayout({
         }
       : null,
     {
-      label: <Link href="/">My Profile</Link>,
+      label: <Link href="/profile">My Profile</Link>,
       key: "profile",
     },
     {
@@ -96,10 +96,6 @@ export default function MainLayout({
       {
         label: <Link href="/fundraiser">Discover</Link>,
         key: "discover",
-      },
-      {
-        label: <Link href="/">About</Link>,
-        key: "about",
       },
     ];
     if (verifiedUserData) {

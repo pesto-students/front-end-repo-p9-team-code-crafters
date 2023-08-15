@@ -41,7 +41,9 @@ export default function CreateFundraiserPage() {
   useEffect(() => {
     if (
       userData &&
-      (!userData.is_user_verified || !userData.are_bank_details_verified)
+      (!userData.is_user_verified ||
+        !userData.bank_details ||
+        !userData.bank_details.account_number)
     ) {
       message.error("User Bank details not verified!!");
       router.push("/");

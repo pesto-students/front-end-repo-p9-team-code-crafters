@@ -2,6 +2,7 @@ import {
   clearAuthToken,
   getApiUrl,
   getApplicationJsonHeader,
+  getAuthHeader,
   getAuthToken,
   handleResponse,
 } from "../utlis";
@@ -47,6 +48,17 @@ export const forgotPassword = (data) => {
     method: "POST",
     headers: {
       ...getApplicationJsonHeader(),
+    },
+    body: JSON.stringify({data}),
+  }).then(handleResponse);
+};
+
+export const changePassword = (data) => {
+  return fetch(getApiUrl("changePassword"), {
+    method: "POST",
+    headers: {
+      ...getApplicationJsonHeader(),
+      ...getAuthHeader(),
     },
     body: JSON.stringify({data}),
   }).then(handleResponse);

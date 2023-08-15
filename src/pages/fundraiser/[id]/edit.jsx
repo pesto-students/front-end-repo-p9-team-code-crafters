@@ -9,13 +9,15 @@ export default function CreateFundraiserPage() {
   const router = useRouter();
   const {id} = router.query;
   const [userData, setUserData] = useState(null);
+  const [callQuery, setCallQuery] = useState(true);
 
   const {data: fundraiserData, isLoading} = useQuery({
     queryFn: () => getFundraiserById(id),
     queryKey: ["getfundraiser", id],
-    enabled: !!id && !!userData,
+    enabled: !!id && !!userData && callQuery,
+    cacheTime: Number.POSITIVE_INFINITY,
     onSuccess: (data) => {
-      if (data && userData._id !== data.created_by) {
+      if (data && userData._id !== data.created_by._id) {
         message.error("Edit access is denied!");
       }
     },
@@ -24,12 +26,18 @@ export default function CreateFundraiserPage() {
   useEffect(() => {
     if (
       userData &&
-      (!userData.is_user_verified || !userData.are_bank_details_verified)
+      (!userData.is_user_verified ||
+        !userData.bank_details ||
+        !userData.bank_details.account_number)
     ) {
       message.error("User Bank details not verified!!");
       router.push("/");
     }
   }, [userData]);
+
+  useEffect(() => {
+    setCallQuery(false);
+  }, []);
 
   return (
     <DashboardLayout

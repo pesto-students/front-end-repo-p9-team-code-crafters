@@ -16,7 +16,7 @@ export default function DashboardLayout({
   children,
   showLoader,
   menuKey,
-  setUserData,
+  setUserData = () => {},
 }) {
   const [showMenu, setShowMenu] = useState(false);
   const [callVerifyUser, setCallVerifyUser] = useState(true);
@@ -49,7 +49,7 @@ export default function DashboardLayout({
 
   const navItems = [
     {
-      label: <Link href="/">My Profile</Link>,
+      label: <Link href="/profile">My Profile</Link>,
       key: "profile",
     },
     {
