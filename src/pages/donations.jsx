@@ -57,7 +57,13 @@ export default function MyDonationsPage() {
   }, [data]);
 
   const maxDonated = useMemo(() => {
-    return data ? Math.max(...data.map((value) => value.amount)) : 0;
+    if (data) {
+      return Math.max(...data.map((value) => value.amount)) ===
+        Number.NEGATIVE_INFINITY
+        ? 0
+        : Math.max(...data.map((value) => value.amount));
+    }
+    return 0;
   }, [data]);
 
   useEffect(() => {

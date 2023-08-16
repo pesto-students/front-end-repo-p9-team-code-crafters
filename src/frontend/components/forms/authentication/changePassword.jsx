@@ -34,6 +34,10 @@ export const ChangePasswordForm = ({handleSubmit, isLoading}) => {
             required: true,
             message: "enter new password!",
           },
+          {
+            min: 8,
+            message: "password should be atleast 8 characters",
+          },
           ({getFieldValue}) => ({
             validator(_, value) {
               if (!value || getFieldValue("currentPassword") !== value) {

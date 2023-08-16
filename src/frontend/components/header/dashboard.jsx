@@ -26,7 +26,7 @@ export const DashboardHeader = ({handleMenuClick, userData}) => {
           >
             <span className="barsBtn"></span>
           </Button>
-          <div className="items-center hidden md:flex cursor-pointer">
+          <div className="items-center hidden md:flex">
             {userData && userData.name ? (
               <span className="mr-4 text-pink">
                 {userData.name.split(" ")[0]}
