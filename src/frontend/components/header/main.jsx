@@ -1,15 +1,15 @@
 import {HamburgerIcon} from "@/assets/icons";
 import {Button, Menu} from "antd";
-// import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 import {array, func, string} from "prop-types";
 
 const Logo = () => {
-  // const router = useRouter();
+  const router = useRouter();
   return (
-    <figure
+    <div
       id="logo-container"
-      className="h-16 w-[150px] md:w-[200px] items-center flex"
-      // onClick={() => router.push("/")} // NOTE: need to enable this
+      className="h-16 w-[150px] md:w-[200px] items-center flex cursor-pointer"
+      onClick={() => router.push("/")}
     >
       <img
         id="logo"
@@ -20,7 +20,7 @@ const Logo = () => {
       <span className="font-semibold text-2xl tracking-wide md:hidden text-white">
         ImpactHub
       </span>
-    </figure>
+    </div>
   );
 };
 

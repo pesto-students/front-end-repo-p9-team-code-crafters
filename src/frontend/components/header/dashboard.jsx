@@ -12,7 +12,7 @@ export const DashboardHeader = ({handleMenuClick, userData}) => {
     <header className="h-16 px-8 fixed top-0 left-0 w-full bg-pink md:bg-white flex items-center justify-between border-b border-solid border-[#eeeeee] z-10">
       <span
         onClick={() => router.push("/")}
-        className="font-semibold text-2xl tracking-wide text-white md:text-pink md:tracking-normal md:font-bold"
+        className="cursor-pointer font-semibold text-2xl tracking-wide text-white md:text-pink md:tracking-normal md:font-bold"
       >
         ImpactHub
       </span>
@@ -26,7 +26,7 @@ export const DashboardHeader = ({handleMenuClick, userData}) => {
           >
             <span className="barsBtn"></span>
           </Button>
-          <div className="items-center hidden md:flex">
+          <div className="items-center hidden md:flex cursor-pointer">
             {userData && userData.name ? (
               <span className="mr-4 text-pink">
                 {userData.name.split(" ")[0]}
