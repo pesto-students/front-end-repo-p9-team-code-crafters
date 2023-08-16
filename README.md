@@ -12,15 +12,15 @@ Welcome to ImpactHub! Our platform aims to foster kindness, generosity, and soci
 
 ## Demo
 
-Explore the ImpactHub platform by visiting our [demo website](#).
+Explore the ImpactHub platform by visiting our [demo website](https://master.d3hodc28s4yr4k.amplifyapp.com/)
 
 Test User Credentials:
-- Username: demo_user
-- Password: demo123
+- Email: demo_user@demo.com
+- Password: demo1234
 
 Test Admin Credentials:
-- Username: demo_admin
-- Password: demo123
+- Email: demo_admin@demo.com
+- Password: demo1234
 
 ## Installation
 
@@ -38,7 +38,7 @@ To run ImpactHub locally, follow these steps:
 - Ant Design (antd)
 
 **Backend Stack:**
-- Next.js API
+- Next.js APIs
 
 **Hosting Service:**
 - AWS Amplify
@@ -47,7 +47,7 @@ To run ImpactHub locally, follow these steps:
 - MongoDB
 
 **Logging:**
-- CloudWatch
+- AWS CloudWatch
 
 ## Authors
 
@@ -57,4 +57,4 @@ This project was created by:
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License]().
