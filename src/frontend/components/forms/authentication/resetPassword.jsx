@@ -17,6 +17,10 @@ export const ResetPasswordForm = ({handleSubmit, isLoading}) => {
             required: true,
             message: "enter password!",
           },
+          {
+            min: 8,
+            message: "password should be atleast 8 characters",
+          },
         ]}
         hasFeedback
       >
