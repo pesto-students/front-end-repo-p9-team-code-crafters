@@ -1,12 +1,35 @@
 import {SignupForm} from "@/frontend/components";
 import AuthenticationLayout from "@/frontend/layouts/authentication";
-import {Typography} from "antd";
+import {signup} from "@/frontend/services";
+import {useMutation} from "@tanstack/react-query";
+import {Typography, message} from "antd";
 import Image from "next/image";
 import Link from "next/link";
+import {useRouter} from "next/router";
 
 export default function Signup() {
+  const router = useRouter();
+  const {isLoading, mutate: mutateSignup} = useMutation({
+    mutationKey: "signup",
+    mutationFn: (data) => signup(data),
+  });
+  const handleSignup = (values, form) => {
+    mutateSignup(
+      {...values, dob: values.dob.$d},
+      {
+        onSuccess: (data) => {
+          message.success(data);
+          router.push("/login");
+          form.resetFields();
+        },
+        onError: (error) => {
+          message.error(error);
+        },
+      }
+    );
+  };
   return (
-    <AuthenticationLayout>
+    <AuthenticationLayout showLoader={isLoading}>
       <div className="w-full md:max-w-md lg:max-w-lg md:p-6 md:bg-white flex flex-col items-center">
         <Image
           className="mb-6 hidden md:block"
@@ -30,7 +53,7 @@ export default function Signup() {
           <Link href="/login">Sign in</Link>
         </div>
         <div className="w-full">
-          <SignupForm />
+          <SignupForm handleSubmit={handleSignup} isLoading={isLoading} />
         </div>
       </div>
     </AuthenticationLayout>

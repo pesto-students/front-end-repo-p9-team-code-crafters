@@ -6,8 +6,19 @@ const prefix =
 
 const API = {
   login: "authentication/login",
+  forgotPassword: "authentication/forgotPassword",
   verify: "authentication/verify",
   signup: "authentication/signup",
+  resetPassword: "authentication/resetPassword",
+  changePassword: "authentication/changePassword",
+  verifyResetPasswordToken: "authentication/resetPassword/verifyToken",
+  fundraiser: "/fundraiser",
+  adminfundraiser: "/fundraiser/admin",
+  donation: "/donation",
+  userFundraiserList: "/fundraiser/user",
+  user: "/user",
+  userActivation: "/user/markUserActivation",
+  verifyBankDetails: "/user/verifyBankDetails",
 };
 
 export const getApiUrl = (urlName) => prefix + get(API, urlName);

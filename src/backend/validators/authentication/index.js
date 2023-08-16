@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import * as yup from "yup";
 
 export const loginSchema = yup.object().shape({
@@ -47,4 +48,21 @@ export const signupSchema = yup.object().shape({
       excludeEmptyString: true,
     }),
   account_number: yup.string(),
+});
+
+export const resetPasswordSchema = yup.object().shape({
+  user: yup.string().required(),
+  code: yup.string().required(),
+  password: yup
+    .string()
+    .required("password is required")
+    .min(8, "password should be atleast 8 characters"),
+});
+
+export const changePasswordSchema = yup.object().shape({
+  currentPassword: yup.string().required("password is required"),
+  password: yup
+    .string()
+    .required("password is required")
+    .min(8, "password should be atleast 8 characters"),
 });

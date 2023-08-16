@@ -24,6 +24,6 @@ export const componentsToken = {
     colorText: "#5a5a5a",
     colorTextDescription: "#5a5a5a",
     colorTextHeading: "#121212",
-    fontFamilyCode: poppins.style.fontFamily,
+    fontFamilyCode: "Poppins",
   },
 };

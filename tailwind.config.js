@@ -14,10 +14,18 @@ module.exports = {
         lightpink: "#FFF5F8",
         pink: "#FD346E",
         lightgray: "#767676",
+        neutral: "#5A5A5A",
+        fontBlack: "#121212",
       },
       fontFamily: {
         sans: ["var(--poppins-font)"],
         poppins: ["var(--poppins-font)", "ui-serif", "Georgia"],
+      },
+      minHeight: {
+        mainLayout: "calc(100vh - 128px)",
+      },
+      spacing: {
+        dashboardmain: "calc(100vh - 128px)",
       },
     },
     screens: {

@@ -2,6 +2,7 @@ import {
   clearAuthToken,
   getApiUrl,
   getApplicationJsonHeader,
+  getAuthHeader,
   getAuthToken,
   handleResponse,
 } from "../utlis";
@@ -13,6 +14,16 @@ export const login = (loginInfo) => {
       ...getApplicationJsonHeader(),
     },
     body: JSON.stringify({data: loginInfo}),
+  }).then(handleResponse);
+};
+
+export const signup = (signupInfo) => {
+  return fetch(getApiUrl("signup"), {
+    method: "POST",
+    headers: {
+      ...getApplicationJsonHeader(),
+    },
+    body: JSON.stringify({data: signupInfo}),
   }).then(handleResponse);
 };
 
@@ -29,5 +40,46 @@ export const verifyUser = async () => {
       ...getApplicationJsonHeader(),
     },
     body: JSON.stringify({data: accessToken}),
+  }).then(handleResponse);
+};
+
+export const forgotPassword = (data) => {
+  return fetch(getApiUrl("forgotPassword"), {
+    method: "POST",
+    headers: {
+      ...getApplicationJsonHeader(),
+    },
+    body: JSON.stringify({data}),
+  }).then(handleResponse);
+};
+
+export const changePassword = (data) => {
+  return fetch(getApiUrl("changePassword"), {
+    method: "POST",
+    headers: {
+      ...getApplicationJsonHeader(),
+      ...getAuthHeader(),
+    },
+    body: JSON.stringify({data}),
+  }).then(handleResponse);
+};
+
+export const resetPassword = (data) => {
+  return fetch(getApiUrl("resetPassword"), {
+    method: "POST",
+    headers: {
+      ...getApplicationJsonHeader(),
+    },
+    body: JSON.stringify({data}),
+  }).then(handleResponse);
+};
+
+export const verifyResetPasswordToken = (data) => {
+  return fetch(getApiUrl("verifyResetPasswordToken"), {
+    method: "POST",
+    headers: {
+      ...getApplicationJsonHeader(),
+    },
+    body: JSON.stringify({data}),
   }).then(handleResponse);
 };

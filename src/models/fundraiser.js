@@ -1,4 +1,4 @@
-import {FUNDRAISER_CATEGORY, FUNDRAISER_STATUS} from "@/appConstants";
+import {FUNDRAISER_CATEGORY, FUNDRAISER_STATUS} from "@/appData";
 import {Schema} from "mongoose";
 
 export const fundraiserSchema = new Schema(
@@ -13,6 +13,7 @@ export const fundraiserSchema = new Schema(
     },
     short_description: {
       type: String,
+      required: [true, "short description is missing"],
     },
     image: {
       type: String,
@@ -34,6 +35,7 @@ export const fundraiserSchema = new Schema(
     status: {
       type: String,
       enum: Object.values(FUNDRAISER_STATUS),
+      required: [true, "status is missing"],
     },
     is_active: {
       type: Boolean,
