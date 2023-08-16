@@ -1,6 +1,11 @@
 import {DatePicker, Form, Input} from "antd";
 import {func, bool} from "prop-types";
 import {FormWrapper} from "../../wrappers";
+import dayjs from "dayjs";
+
+const disabledDate = (current) => {
+  return current && current > dayjs().endOf("day");
+};
 
 export const SignupForm = ({handleSubmit, isLoading}) => {
   return (
@@ -62,7 +67,11 @@ export const SignupForm = ({handleSubmit, isLoading}) => {
           },
         ]}
       >
-        <DatePicker className="w-full" placeholder="Date of Birth" />
+        <DatePicker
+          disabledDate={disabledDate}
+          className="w-full"
+          placeholder="Date of Birth"
+        />
       </Form.Item>
       <Form.Item
         name="password"

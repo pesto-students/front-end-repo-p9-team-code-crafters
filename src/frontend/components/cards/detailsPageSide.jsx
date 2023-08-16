@@ -1,4 +1,4 @@
-import {array, func, number, string} from "prop-types";
+import {array, bool, func, number, string} from "prop-types";
 import {FundraiserProgress} from "../progress";
 import {Button} from "antd";
 
@@ -7,6 +7,7 @@ export const DetailsPageSideCard = ({
   target_date,
   donation,
   onDonateClick,
+  disableDonate = false,
 }) => {
   return (
     <div className="md:bg-white md:p-6 md:min-h-0">
@@ -21,6 +22,7 @@ export const DetailsPageSideCard = ({
           className="w-full mr-4 mb-4"
           type="primary"
           size="large"
+          disabled={disableDonate}
         >
           Donate
         </Button>
@@ -40,4 +42,5 @@ DetailsPageSideCard.propTypes = {
   target_date: string,
   donation: array,
   onDonateClick: func,
+  disableDonate: bool,
 };

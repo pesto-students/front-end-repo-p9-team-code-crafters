@@ -54,6 +54,10 @@ export const UserBankDetailsForm = ({
             message: "Please input ifsc code!",
             whitespace: true,
           },
+          {
+            pattern: /^[A-Za-z]{4}0[\dA-Z]{6}$/,
+            message: "invalid IFSC code!",
+          },
         ]}
       >
         <Input placeholder="IFSC code" />
@@ -66,6 +70,10 @@ export const UserBankDetailsForm = ({
             required: true,
             message: "Please input your account number!",
             whitespace: true,
+          },
+          {
+            pattern: /^\d{9,18}$/,
+            message: "invalid account number!",
           },
         ]}
       >

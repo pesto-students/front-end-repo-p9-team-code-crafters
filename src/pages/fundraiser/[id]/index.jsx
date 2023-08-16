@@ -59,8 +59,16 @@ export default function FundraiserPage() {
           <Row gutter={[32, 32]}>
             <Col xs={24} md={15} lg={18}>
               {isLoading ? <DataSkeletonCard /> : null}
-              {!data || isError ? <FundraiserNotAvailableCard /> : null}
-              {isSuccess && data ? (
+              {!data ||
+              isError ||
+              !data.created_by ||
+              !data.created_by.is_active ? (
+                <FundraiserNotAvailableCard />
+              ) : null}
+              {isSuccess &&
+              data &&
+              data.created_by &&
+              data.created_by.is_active ? (
                 <DetailsPageMainCard
                   onDonateClick={() => setShowDonationModal(true)}
                   {...data}
@@ -68,7 +76,10 @@ export default function FundraiserPage() {
               ) : null}
             </Col>
             <Col className="hidden md:block" xs={24} md={9} lg={6}>
-              {isSuccess && data ? (
+              {isSuccess &&
+              data &&
+              data.created_by &&
+              data.created_by.is_active ? (
                 <DetailsPageSideCard
                   donation={data.donation}
                   target_amount={data.target_amount}

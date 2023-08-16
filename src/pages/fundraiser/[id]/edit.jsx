@@ -3,7 +3,7 @@ import DashboardLayout from "@/frontend/layouts/dashboard";
 import {editFundraiser, getFundraiserById} from "@/frontend/services";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {Button, message, notification} from "antd";
-import moment from "moment";
+import dayjs from "dayjs";
 import {useRouter} from "next/router";
 import {useEffect, useMemo, useState} from "react";
 
@@ -67,7 +67,7 @@ export default function CreateFundraiserPage() {
           short_description: fundraiserData.short_description,
           category: fundraiserData.category,
           target_amount: fundraiserData.target_amount,
-          target_date: moment(fundraiserData.target_date),
+          target_date: dayjs(fundraiserData.target_date),
           image: [
             {
               uid: "1",

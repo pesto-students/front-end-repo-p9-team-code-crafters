@@ -34,13 +34,14 @@ export default function FundraiserListPage() {
   const filteredFundraiserList = useMemo(() => {
     const temporaryList = data && data.length > 0 ? [...data] : [];
     return temporaryList
+      .filter((value) => value.created_by && value.created_by.is_active)
       .filter((value) =>
         fundraiserFilter === "all" ? true : value.category === fundraiserFilter
       )
       .filter((value) =>
         !searchText || searchText === ""
           ? true
-          : value.title.includes(searchText)
+          : value.title.toLowerCase().includes(searchText.toLowerCase())
       );
   }, [data, fundraiserFilter, searchText]);
 
@@ -51,10 +52,10 @@ export default function FundraiserListPage() {
         className="px-8 pt-4 pb-4 md:pb-8 w-full bg-lightpink "
       >
         {isLoading ? <DataSkeletonCard /> : null}
-        {!data || data.length === 0 || isError ? (
+        {!isLoading && (!data || data.length === 0 || isError) ? (
           <FundraiserNotAvailableCard />
         ) : null}
-        {isSuccess && data.length > 0 ? (
+        {!isLoading && isSuccess && data.length > 0 ? (
           <>
             <h3 className="md:hidden font-semibold text-2xl mt-4">
               My Fundraisers

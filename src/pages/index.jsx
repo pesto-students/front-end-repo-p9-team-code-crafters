@@ -47,7 +47,7 @@ export default function Home() {
                 <MyFundraiserCard
                   {...fundraiser}
                   btnText="Donate"
-                  clickHandler={() =>
+                  onCardClick={() =>
                     router.push("/fundraiser/" + fundraiser?._id)
                   }
                 />

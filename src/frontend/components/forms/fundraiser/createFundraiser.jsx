@@ -12,6 +12,11 @@ import {FormWrapper} from "../../wrappers";
 import {TextEditor} from "../../inputs";
 import {UploadOutlined} from "@ant-design/icons";
 import {FUNDRAISER_CATEGORY} from "@/appData";
+import dayjs from "dayjs";
+
+const disabledDate = (current) => {
+  return current && current < dayjs().endOf("day");
+};
 
 const normFile = (event) => {
   if (Array.isArray(event)) {
@@ -120,6 +125,11 @@ export const CreateFundraiserForm = ({
         label={<span className="text-lg text-fontBlack">Target Amount</span>}
         rules={[
           {
+            min: 0,
+            type: "number",
+            message: "target amount should be greater than 0!",
+          },
+          {
             required: true,
             message: "enter target amount!",
           },
@@ -138,7 +148,7 @@ export const CreateFundraiserForm = ({
           },
         ]}
       >
-        <DatePicker />
+        <DatePicker disabledDate={disabledDate} />
       </Form.Item>
     </FormWrapper>
   );

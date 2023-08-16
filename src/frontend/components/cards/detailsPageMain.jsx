@@ -1,5 +1,5 @@
 import moment from "moment";
-import {array, func, number, object, string} from "prop-types";
+import {array, bool, func, number, object, string} from "prop-types";
 import {RichText} from "../inputs";
 import {FundraiserProgress} from "../progress";
 import {Button} from "antd";
@@ -14,6 +14,7 @@ export const DetailsPageMainCard = ({
   target_date,
   donation,
   onDonateClick,
+  disableDonate = false,
 }) => {
   return (
     <div className="md:bg-white md:p-6 min-h-[700px] md:min-h-0">
@@ -49,6 +50,7 @@ export const DetailsPageMainCard = ({
           className="w-full md:w-64 mr-4 mb-4 md:mb-0"
           type="primary"
           size="large"
+          disabled={disableDonate}
         >
           Donate
         </Button>
@@ -73,4 +75,5 @@ DetailsPageMainCard.propTypes = {
   target_date: string,
   donation: array,
   onDonateClick: func,
+  disableDonate: bool,
 };
