@@ -104,10 +104,8 @@ export default function MyFundraiserPage() {
       </div>
       <div className="mb-8">
         {(isError && !isLoading && !isSuccess) ||
-        (filteredFundraiserList &&
-          filteredFundraiserList.length === 0 &&
-          !isLoading &&
-          !isSuccess) ? (
+        (filteredFundraiserList && filteredFundraiserList.length === 0) ||
+        (!isLoading && !isSuccess) ? (
           <FundraiserNotAvailableCard />
         ) : null}
         {!isError && !isSuccess && isLoading ? <DataSkeletonCard /> : null}
