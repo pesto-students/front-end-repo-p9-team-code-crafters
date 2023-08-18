@@ -230,7 +230,7 @@ export const getFundraiserListController = async (request, response) => {
               model: "Donation",
             },
           ])
-          .sort({createdAt: "asc"})
+          .sort({createdAt: "desc"})
           .limit(4)
       : Fundraiser.find(queryObject).populate([
           {
