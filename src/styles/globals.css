@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--poppins-font) !important;
+}
+
+html {
+  color: #5a5a5a;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #121212;
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+  @apply text-pink;
+}
+
+.ant-menu-horizontal {
+  border-bottom: none;
+}
+
+.ant-typography {
+  font-family: var(--poppins-font) !important;
+}
+
+.ant-form-item-label {
+  padding: 0 !important;
+  height: 40px !important;
+  font-size: 16px !important;
+}
+
+.ant-btn-primary:hover {
+  @apply !bg-pink;
+}
+
+.ant-btn-default:hover {
+  @apply !border-pink !text-pink;
+}
+
+.shadow {
+  box-shadow: 7.5px 0px 15px 0px rgba(0, 0, 0, 0.05);
+}
+
+.primary .ant-select-selector {
+  @apply !border !border-solid !border-pink !text-pink !rounded-3xl;
+}
+
+.primary .ant-select-arrow {
+  @apply !text-pink;
+}
+
+.ql-container {
+  font-size: 16px !important;
+  padding: 0 12px;
+  font-family: var(--poppins-font) !important;
+  background-color: #ffffff;
+}
+
+.ql-container .ql-editor {
+  padding: 0;
+  min-height: 200px;
+}
+
+.ql-container .ql-editor ol,
+ul {
+  padding: 0;
+}
+
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
+  padding: 12px;
+}
+
+.ql-container.ql-bubble.ql-disabled {
+  padding: 0 !important;
+}
+
+.ql-container.ql-bubble .ql-editor {
+  @apply p-4 md:p-0;
+}
