@@ -44,7 +44,7 @@ export const updateUserVerificationDetailsController = async (
 export const getUsersController = async (_request, response) => {
   try {
     const users = await User.find({}, "-password -updatedAt -__v").sort({
-      name: "asc",
+      name: "desc",
     });
     return response.status(200).send({data: users});
   } catch (error) {
